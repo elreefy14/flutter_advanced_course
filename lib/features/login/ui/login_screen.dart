@@ -1,18 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_project/core/helpers/extensions.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../core/routing/routes.dart';
-
-
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
-
 class _LoginScreenState extends State<LoginScreen> {
   final controller = ScrollController();
   double offset = 0;
@@ -46,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             MyHeader(
-              image: "assets/icons/Drcorona.svg",
+              image: "assets/icons/home_background.svg",
               textTop: "All you need",
               textBottom: "is stay at home.",
               offset: offset,
@@ -105,88 +100,88 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             SizedBox(height: 20),
-            Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 20.w),
-              child: Text(
-                'choose event type :',
-                style: TextStyles.font24BlackBold.copyWith(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600
-
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding:  EdgeInsets.symmetric(horizontal: 20.w),
+            //   child: Text(
+            //     'choose event type :',
+            //     style: TextStyles.font24BlackBold.copyWith(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.w600
+            //
+            //     ),
+            //   ),
+            // ),
             SizedBox(height: 20),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              height: 60,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(
-                  color: Color(0xFFE5E5E5),
-                ),
-              ),
-              child: Row(
-                children: <Widget>[
-                 // SvgPicture.asset("assets/icons/maps-and-flags.svg"),
-                //  SizedBox(width: 20),
-                  Expanded(
-                    child: DropdownButton(
-                      isExpanded: true,
-                      underline: SizedBox(),
-                      icon: SvgPicture.asset("assets/icons/dropdown.svg"),
-                      value: "scientific event",
-                      items: [
-                        'scientific event',
-                        'Social event',
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (value) {},
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Container(
-                width: double.infinity,
-                height: 50.h,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF3383CD), Color(0xFF11249F)],
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                  ),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    // Handle button press here
-                    context.pushNamed(
-                      Routes.homeScreen,
-                      //
-                    );
-                  },
-                  child: Text(
-                    "Next",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Container(
+            //   margin: EdgeInsets.symmetric(horizontal: 20),
+            //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            //   height: 60,
+            //   width: double.infinity,
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     borderRadius: BorderRadius.circular(25),
+            //     border: Border.all(
+            //       color: Color(0xFFE5E5E5),
+            //     ),
+            //   ),
+            //   child: Row(
+            //     children: <Widget>[
+            //      // SvgPicture.asset("assets/icons/maps-and-flags.svg"),
+            //     //  SizedBox(width: 20),
+            //       Expanded(
+            //         child: DropdownButton(
+            //           isExpanded: true,
+            //           underline: SizedBox(),
+            //           icon: SvgPicture.asset("assets/icons/dropdown.svg"),
+            //           value: "scientific event",
+            //           items: [
+            //             'scientific event',
+            //             'Social event',
+            //           ].map<DropdownMenuItem<String>>((String value) {
+            //             return DropdownMenuItem<String>(
+            //               value: value,
+            //               child: Text(value),
+            //             );
+            //           }).toList(),
+            //           onChanged: (value) {},
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // SizedBox(height: 20),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 20.w),
+            //   child: Container(
+            //     width: double.infinity,
+            //     height: 50.h,
+            //     decoration: BoxDecoration(
+            //       gradient: LinearGradient(
+            //         colors: [Color(0xFF3383CD), Color(0xFF11249F)],
+            //         begin: Alignment.topRight,
+            //         end: Alignment.bottomLeft,
+            //       ),
+            //       borderRadius: BorderRadius.circular(25),
+            //     ),
+            //     child: TextButton(
+            //       onPressed: () {
+            //         // Handle button press here
+            //         context.pushNamed(
+            //           Routes.onBoardingScreen,
+            //           //
+            //         );
+            //       },
+            //       child: Text(
+            //         "Next",
+            //         style: TextStyle(
+            //           color: Colors.white,
+            //           fontSize: 16.sp,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -298,56 +293,31 @@ class _MyHeaderState extends State<MyHeader> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Color(0xFF3383CD),
-              Color(0xFF11249F),
+              Color(0xFF2C3E50), // Darker shade of blue
+              Color(0xFF2980B9), // Lighter shade of blue
             ],
           ),
           image: DecorationImage(
-            image: AssetImage("assets/images/virus.png"),
+            image: AssetImage(""),
           ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // GestureDetector(
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //         builder: (context) {
-            //           return LoginScreen();
-            //         },
-            //       ),
-            //     );
-            //   },
-            //   child: SvgPicture.asset("assets/icons/menu.svg"),
-            // ),
-            //SizedBox(height: 20),
             Expanded(
               child: Stack(
                 children: <Widget>[
-                  // Positioned(
-                  //   top: (widget.offset < 0) ? 0 : widget.offset,
-                  //   child: SvgPicture.asset(
-                  //     widget.image,
-                  //     width: 230,
-                  //     fit: BoxFit.fitWidth,
-                  //     alignment: Alignment.topCenter,
-                  //   ),
-                  // ),
                   Center(
                     child: Text(
                       "           Your journey \n"
                           "to planning extraordinary\n "
-                          "    events begins here\n"
-                          ,
-
+                          "    events begins here\n",
                       style: TextStyles.font16WhiteMedium.copyWith(
-                        fontSize: 26
-                      )
+                        fontSize: 26,
+                      ),
                     ),
                   ),
-                  Container(), // I dont know why it can't work without container
+                  Container(), // Placeholder container
                 ],
               ),
             ),
@@ -355,6 +325,7 @@ class _MyHeaderState extends State<MyHeader> {
         ),
       ),
     );
+
   }
 }
 

@@ -19,28 +19,31 @@ class AppRouter {
     switch (settings.name) {
       case Routes.onBoardingScreen:
         return MaterialPageRoute(
-          builder: (_) => const OnboardingScreen(),
+          builder: (_) =>  OnboardingScreen(),
         );
       case Routes.loginScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<LoginCubit>(),
-            child:  LoginScreen(),
+            child:  OnboardingScreen(),
           ),
         );
-      case Routes.signUpScreen:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => getIt<SignupCubit>(),
-            child: const SignupScreen(),
-          ),
-        );
+      // case Routes.signUpScreen:
+      //   return MaterialPageRoute(
+      //     builder: (_) => BlocProvider(
+      //       create: (context) => getIt<SignupCubit>(),
+      //       child: const SignupScreen(),
+      //     ),
+      //   );
       case Routes.homeScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => HomeCubit(getIt())..getSpecializations(),
             child: const HomeScreen(),
           ),
+        );    case Routes.checkoutScreen:
+        return MaterialPageRoute(
+          builder: (_) =>  CheckOutScreen(eventCount: 2,),
         );
       default:
         return null;

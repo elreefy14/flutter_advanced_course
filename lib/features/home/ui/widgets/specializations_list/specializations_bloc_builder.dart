@@ -69,9 +69,9 @@ class CategoryScreen extends StatelessWidget {
     Category(name: 'Décoration', imageUrl: 'assets/images/decoration.png'),
     Category(name: 'Animation', imageUrl: 'assets/images/icons8-accordion-100.png'),
     Category(name: 'Photographie', imageUrl: 'assets/images/photographie.png'),
-    Category(name: 'Habbillesment et beauté', imageUrl: 'assets/images/habbillesment.png'),
-    Category(name: 'Gestionnaire des invités', imageUrl: 'assets/images/gestionnaire.png'),
-    Category(name: 'Location des véhicules de mariage', imageUrl: 'assets/images/vehicules.png'),
+    Category(name: 'Habbillesment \net beauté', imageUrl: 'assets/images/habbillesment.png'),
+    Category(name: 'Gestionnaire \ndes invités', imageUrl: 'assets/images/gestionnaire.png'),
+    Category(name: 'véhicules \nde mariage', imageUrl: 'assets/images/vehicules.png'),
   ];
 
   @override

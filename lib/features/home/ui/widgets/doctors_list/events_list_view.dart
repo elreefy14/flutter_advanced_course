@@ -100,6 +100,14 @@ class EventListViewItem extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(width: 16.w),
+          //add image icon .png here
+          Image.asset(
+            'assets/images/add.png', // Replace with your actual icon path
+            width: 35.w,
+            height: 35.h,
+            fit: BoxFit.contain,
+          ),
         ],
       ),
     );
@@ -120,8 +128,8 @@ class EventsListScreen extends StatelessWidget {
     for (int i = 0; i < count; i++) {
       events.add(Event(
         id: i + 1,
-        title: 'Event ${i + 1}',
-        description: 'This is a description for Event ${i + 1}',
+        title: 'Service Provider ${i + 1}',
+        description: 'DZD 1200',
         date: DateTime.now().add(Duration(days: random.nextInt(30))),
         location: 'Location ${random.nextInt(100)}',
         organizer: Organizer(
