@@ -1,8 +1,11 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_project/core/helpers/extensions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../../../../../core/routing/routes.dart';
 
 // Event model classes
 class Event {
@@ -48,67 +51,72 @@ class EventListViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 16.h),
-      child: Row(
-        children: [
-          // Use AssetImage for the event image
-          Image.asset(
-            'assets/images/kmll.PNG',
-            width: 110.w,
-            height: 120.h,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => Container(
+    return InkWell(
+      onTap: (){
+        context.pushNamed(Routes.DetailsScreen);
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 16.h),
+        child: Row(
+          children: [
+            // Use AssetImage for the event image
+            Image.asset(
+              'assets/images/kmll.PNG',
               width: 110.w,
               height: 120.h,
-              color: Colors.grey[300],
-              child: Icon(Icons.error, color: Colors.red),
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                width: 110.w,
+                height: 120.h,
+                color: Colors.grey[300],
+                child: Icon(Icons.error, color: Colors.red),
+              ),
             ),
-          ),
-          SizedBox(width: 16.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  eventModel?.title ?? 'Event Title',
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue[900],
+            SizedBox(width: 16.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    eventModel?.title ?? 'Event Title',
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue[900],
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                SizedBox(height: 5.h),
-                Text(
-                  '${eventModel?.date.toLocal()} | ${eventModel?.location}',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: Colors.grey[600],
+                  SizedBox(height: 5.h),
+                  Text(
+                    '${eventModel?.date.toLocal()} | ${eventModel?.location}',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: Colors.grey[600],
+                    ),
                   ),
-                ),
-                SizedBox(height: 5.h),
-                Text(
-                  eventModel?.description ?? 'Event Description',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: Colors.grey[600],
+                  SizedBox(height: 5.h),
+                  Text(
+                    eventModel?.description ?? 'Event Description',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: Colors.grey[600],
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          SizedBox(width: 16.w),
-          //add image icon .png here
-          Image.asset(
-            'assets/images/add.png', // Replace with your actual icon path
-            width: 35.w,
-            height: 35.h,
-            fit: BoxFit.contain,
-          ),
-        ],
+            SizedBox(width: 16.w),
+            //add image icon .png here
+            Image.asset(
+              'assets/images/add.png', // Replace with your actual icon path
+              width: 35.w,
+              height: 35.h,
+              fit: BoxFit.contain,
+            ),
+          ],
+        ),
       ),
     );
   }

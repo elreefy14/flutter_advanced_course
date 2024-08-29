@@ -6,11 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../home/ui/widgets/doctors_list/events_list_view.dart';
 import '../home/ui/widgets/specializations_list/specializations_bloc_builder.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../home/ui/widgets/doctors_list/events_list_view.dart';
 import '../login/ui/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -198,6 +193,7 @@ class CategoryScreen extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             // Handle category selection logic here
+            context.pushNamed(Routes.DetailsScreen);
           },
           child: Container(
             decoration: BoxDecoration(

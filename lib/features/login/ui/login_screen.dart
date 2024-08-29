@@ -295,6 +295,8 @@ class _MyHeaderState extends State<MyHeader> {
             colors: [
               Color(0xFF2C3E50), // Darker shade of blue
               Color(0xFF2980B9), // Lighter shade of blue
+              //Color(0xFF0593B8), // Lighter shade of blue
+              //Color(0xFF2DFFF5), // Darker shade of blue
             ],
           ),
           image: DecorationImage(

@@ -7,6 +7,7 @@ import 'package:flutter_complete_project/features/login/logic/cubit/login_cubit.
 import 'package:flutter_complete_project/features/login/ui/login_screen.dart';
 import 'package:flutter_complete_project/features/onboarding/onboarding_screen.dart';
 
+import '../../features/details_screen/ui/details_screen.dart';
 import '../../features/sign_up/logic/sign_up_cubit.dart';
 import '../../features/sign_up/ui/sign_up_screen.dart';
 import '../di/dependency_injection.dart';
@@ -27,6 +28,9 @@ class AppRouter {
             create: (context) => getIt<LoginCubit>(),
             child:  OnboardingScreen(),
           ),
+        ); case Routes.DetailsScreen:
+        return MaterialPageRoute(
+          builder: (_) => DetailsScreen(),
         );
       // case Routes.signUpScreen:
       //   return MaterialPageRoute(
