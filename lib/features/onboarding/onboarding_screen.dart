@@ -1,9 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_project/core/helpers/extensions.dart';
-import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/routing/routes.dart';
+import '../home/ui/widgets/doctors_list/events_list_view.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_complete_project/core/helpers/extensions.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../core/routing/routes.dart';
 import '../home/ui/widgets/doctors_list/events_list_view.dart';
 import '../home/ui/widgets/specializations_list/specializations_bloc_builder.dart';
 import '../login/ui/login_screen.dart';
@@ -19,55 +26,75 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<Map<String, dynamic>> categoryScreens = [
     {
-      'screen': LoginScreen(), // First screen: the LoginScreen
+      'screen': LoginScreen(),
+      'category': Category(name: 'Home', imageUrl: 'assets/icons/home.png'),
     },
     {
       'category': Category(name: 'Lieu', imageUrl: 'assets/images/lieu.png'),
-      'events': 5,
     },
     {
       'category': Category(name: 'Décoration', imageUrl: 'assets/images/decoration.png'),
-      'events': 5,
     },
     {
       'category': Category(name: 'Animation', imageUrl: 'assets/images/icons8-accordion-100.png'),
-      'events': 5,
     },
     {
       'category': Category(name: 'Photographie', imageUrl: 'assets/images/photographie.png'),
-      'events': 5,
     },
     {
-      'category': Category(name: 'Habbillesment et beauté', imageUrl: 'assets/images/habbillesment.png'),
-      'events': 5,
+      'category': Category(name: 'Habbillesment \net beauté', imageUrl: 'assets/icons/habbillesment.png'),
     },
     {
-      'category': Category(name: 'Gestionnaire des invités', imageUrl: 'assets/images/gestionnaire.png'),
-      'events': 5,
+      'category': Category(name: 'Gestionnaire \ndes invités', imageUrl: 'assets/icons/gestionnaire.png'),
     },
     {
-      'category': Category(name: 'véhicules de mariage', imageUrl: 'assets/images/vehicules.png'),
-      'events': 5,
+      'category': Category(name: 'Véhicules \nde mariage', imageUrl: 'assets/images/vehicules.png'),
     },
+    ////////
+    // Category(name: 'Lieu', imageUrl: 'assets/images/lieu.png'),
+    // Category(name: 'Décoration', imageUrl: 'assets/images/decoration.png'),
+    // Category(name: 'Animation', imageUrl: 'assets/images/icons8-accordion-100.png'),
+    // Category(name: 'Photographie', imageUrl: 'assets/images/photographie.png'),
+    // Category(name: 'Habbillesment \net beauté', imageUrl: 'assets/images/habbillesment.png'),
+    // Category(name: 'Gestionnaire \ndes invités', imageUrl: 'assets/images/gestionnaire.png'),
+    // Category(name: 'véhicules \nde mariage', imageUrl: 'assets/images/vehicules.png'),
+
   ];
 
   void _nextPage() {
     if (_currentIndex < categoryScreens.length - 1) {
-      _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+      _pageController.nextPage(
+        duration: Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
     } else {
       // Finish onboarding or navigate to another screen
     }
   }
 
-  void _skip() {
-    // Skip to the last page or finish onboarding
-    _pageController.jumpToPage(categoryScreens.length - 1);
+  void _previousPage() {
+    if (_currentIndex > 0) {
+      _pageController.previousPage(
+        duration: Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    }
+  }
+
+  void _goToPage(int index) {
+    _pageController.animateToPage(
+      index,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SafeArea(
         child: Column(
           children: [
@@ -86,7 +113,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   } else {
                     final categoryInfo = categoryScreens[index];
                     final category = categoryInfo['category'] as Category;
-                    final eventCount = categoryInfo['events'] as int;
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -104,66 +130,99 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20.0),
                             child: EventsListScreen(
-                              eventCount: eventCount,
+                              eventCount: 5, // Adjust as necessary
                             ),
                           ),
                         ),
-
                       ],
                     );
                   }
                 },
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                categoryScreens.length,
-                    (index) => Container(
-                  margin: EdgeInsets.symmetric(horizontal: 4.0),
-                  width: _currentIndex == index ? 12.0 : 8.0,
-                  height: _currentIndex == index ? 12.0 : 8.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _currentIndex == index ?  Color(0xFF2980B9) : Colors.grey,
-                  ),
+            SizedBox(
+              height: 20,
+            ),
+
+            // Custom Stepper with Icons
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround, // Distribute icons evenly
+                children: List.generate(
+                  categoryScreens.length,
+                      (index) {
+                    final isActive = _currentIndex == index;
+                    final imageUrl = categoryScreens[index]['category'] != null
+                        ? categoryScreens[index]['category'].imageUrl
+                        : 'assets/icons/default.png';
+
+                    return StepperDot(
+                      imageUrl: imageUrl,
+                      categoryName: categoryScreens[index]['category'] != null
+                          ? categoryScreens[index]['category'].name
+                          : '',
+                      isActive: isActive,
+                      onTap: () => _goToPage(index),
+                    );
+                  },
                 ),
               ),
             ),
 
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_currentIndex == categoryScreens.length - 1) {
-                    // Navigate to the CheckoutScreen
-                    context.pushNamed(
-                      Routes.checkoutScreen,
-                      //
-                    );
-                  } else {
-                    // Go to the next page
-                    _nextPage();
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color(0xFF2980B9), // Button background color
-                  padding: EdgeInsets.symmetric(vertical: 14.0), // Adjusts the padding for a more prominent button
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0), // Rounded corners
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: _currentIndex == 0 ? null : _previousPage,
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.grey ,
+                      padding: EdgeInsets.symmetric(vertical: 14.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                    child: Text(
+                      'Prev',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-                child: Text(
-                  _currentIndex == categoryScreens.length - 1 ? 'Checkout' : 'Next',
-                  style: TextStyle(
-                    fontSize: 16.0,           // Font size for the button text
-                    fontWeight: FontWeight.bold, // Bold text for emphasis
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_currentIndex == categoryScreens.length - 1) {
+                        context.pushNamed(
+                          Routes.checkoutScreen,
+                        );
+                      } else {
+                        _nextPage();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Color(0xFF2980B9),
+                      padding: EdgeInsets.symmetric(vertical: 14.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                    child: Text(
+                      _currentIndex == categoryScreens.length - 1 ? 'Checkout' : 'Next',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
-
           ],
         ),
       ),
@@ -171,51 +230,76 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 }
 
+class StepperDot extends StatelessWidget {
+  final String imageUrl;
+  final String categoryName;
+  final bool isActive;
+  final VoidCallback onTap;
 
-class CategoryScreen extends StatelessWidget {
-  final List<Category> categories;
-
-  CategoryScreen({required this.categories});
+  const StepperDot({
+    super.key,
+    required this.imageUrl,
+    required this.categoryName,
+    this.isActive = false,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: EdgeInsets.all(16.0),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 3 / 2,
-        crossAxisSpacing: 16.0,
-        mainAxisSpacing: 16.0,
-      ),
-      itemCount: categories.length,
-      itemBuilder: (context, index) {
-        final category = categories[index];
-        return GestureDetector(
-          onTap: () {
-            // Handle category selection logic here
-            context.pushNamed(Routes.DetailsScreen);
-          },
-          child: Container(
+    // Split the category name into two lines if it consists of more than 1 word
+    String displayName = _splitCategoryName(categoryName);
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(2.0),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.0),
-              image: DecorationImage(
-                image: AssetImage(category.imageUrl),
-                fit: BoxFit.cover,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: isActive ? Colors.blue : Colors.grey,
+                width: 1.0,
               ),
             ),
-            alignment: Alignment.bottomCenter,
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              category.name,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 16.0,
-              ),
+            child: CircleAvatar(
+              radius: isActive ? 19 : 16.5,
+              backgroundImage: AssetImage(imageUrl),
+              backgroundColor: Colors.transparent,
             ),
           ),
-        );
-      },
+          if (isActive) const SizedBox(height: 4),
+          if (isActive)
+            Text(
+              displayName,
+              style: TextStyle(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+              textAlign: TextAlign.center,
+              softWrap: true,
+              maxLines: 2, // Allows the text to wrap into two lines
+            ),
+        ],
+      ),
     );
   }
+
+  String _splitCategoryName(String name) {
+    // Split by spaces
+    List<String> words = name.split(' ');
+
+    if (words.length <= 1) {
+      return name; // No need to split if it's already one word
+    }
+
+    // Join the first half and second half of the list with new lines
+    int midIndex = (words.length / 2).ceil();
+    String firstLine = words.sublist(0, 1).join(' ');
+    String secondLine = words.sublist(1,3).join(' ');
+
+    return '$firstLine\n$secondLine';
+  }
 }
+
