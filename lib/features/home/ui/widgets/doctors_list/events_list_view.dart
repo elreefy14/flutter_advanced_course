@@ -9,9 +9,9 @@ import '../../../../../core/routing/routes.dart';
 
 // ServiceProvidersListViewItem widget
 class ServiceProvidersListViewItem extends StatelessWidget {
-  final ServiceProviders? eventModel;
+  final ServiceProviders? ServiceProviderModel;
 
-  const ServiceProvidersListViewItem({super.key, this.eventModel});
+  const ServiceProvidersListViewItem({super.key, this.ServiceProviderModel});
 
   @override
   Widget build(BuildContext context) {
@@ -38,37 +38,40 @@ class ServiceProvidersListViewItem extends StatelessWidget {
             ),
             SizedBox(width: 16.w),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    eventModel?.name ?? 'Service Provider Title',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue[900],
+              child: Container(
+                height: 120.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      ServiceProviderModel?.name ?? 'Service Provider Title',
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue[900],
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(height: 5.h),
-                  Text(
-                    '${eventModel?.description}',
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      color: Colors.grey[600],
+                    SizedBox(height: 5.h),
+                    Text(
+                      '${ServiceProviderModel?.phone}',
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: Colors.grey[600],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 5.h),
-                  Text(
-                    eventModel?.description ?? 'Service Provider Description',
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      color: Colors.grey[600],
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+                    // SizedBox(height: 5.h),
+                    // Text(
+                    //   ServiceProviderModel?.phone ?? 'Service Provider Description',
+                    //   style: TextStyle(
+                    //     fontSize: 12.sp,
+                    //     color: Colors.grey[600],
+                    //   ),
+                    //   maxLines: 2,
+                    //   overflow: TextOverflow.ellipsis,
+                    // ),
+                  ],
+                ),
               ),
             ),
             SizedBox(width: 16.w),
@@ -88,6 +91,10 @@ class ServiceProvidersListViewItem extends StatelessWidget {
 
 // ServiceProvidersListScreen widget
 class ServiceProvidersListScreen extends StatelessWidget {
+  final String categoryName;
+
+  const ServiceProvidersListScreen({required this.categoryName});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,12 +104,18 @@ class ServiceProvidersListScreen extends StatelessWidget {
           return state.when(
             initial: () => Center(child: Text('Load service providers')),
             loading: () => Center(child: CircularProgressIndicator()),
-            success: (serviceProviders) => ListView.builder(
-              itemCount: serviceProviders.length,
-              itemBuilder: (context, index) {
-                return ServiceProvidersListViewItem(eventModel: serviceProviders[index]);
-              },
-            ),
+            success: (serviceProviders) {
+              final filteredProviders = serviceProviders.where((provider) {
+                return provider.category == categoryName;
+              }).toList();
+
+              return ListView.builder(
+                itemCount: filteredProviders.length,
+                itemBuilder: (context, index) {
+                  return ServiceProvidersListViewItem(ServiceProviderModel: filteredProviders[index]);
+                },
+              );
+            },
             error: (error) => Center(child: Text(error)),
           );
         },

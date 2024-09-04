@@ -1,5 +1,5 @@
 {
-  "Evénements sociaux": {
+  "Salles des fêtes": {
     "Salles des fêtes": [
       {
         "name": "Salle des fêtes Ouzbiha",
@@ -74,7 +74,7 @@
     ]
   },
   "Catering": {
-    "Gateaux": [
+    "Catering": [
       { "name": "Gateaux rima sadeli", "phone": "0656567115" },
       { "name": "Gateaux de mina", "phone": "0542242914" },
       { "name": "Gateaux mesk Ellil bejaia", "phone": "0555369931" },
@@ -82,7 +82,23 @@
       { "name": "Gateaux kenza", "phone": "0551952444" },
       { "name": "La meringue anosizato", "phone": "0348717237" },
       { "name": "Gâteaux secs sur commandes", "phone": "0555909399" },
-      { "name": "Les délices de meriem", "phone": "0770964339" }
+      { "name": "Les délices de meriem", "phone": "0770964339" },
+      { "name": "Serveuses cérémonie", "phone": "0557802704" },
+      { "name": "Serveuses de bejaia", "phone": "0778545192" },
+      { "name": "Serveuses de luxe", "phone": "0556766376" },
+      { "name": "Serveuses de bonheur", "phone": "0674928462" },
+      { "name": "Serveuses félécia", "phone": "0792383948" },
+      { "name": "Serveurs de bejaia", "phone": "0796200798" },
+      { "name": "Serveuses pour fetes bejaia", "phone": "0542758050" },
+      { "name": "Serveuses étoile d’or Bejaia", "phone": "0540805243" },
+      { "name": "Serveuses Aokas Bejaia", "phone": "0542863683" },
+
+      { "name": "Yanis cuisiner", "phone": "0553893219" },
+      { "name": "Sofiane cuisinier", "phone": "0540781196" },
+      { "name": "Chef sofiane anarakdim", "phone": "0699033558" },
+      { "name": "Cuisinier el afrah", "phone": "0664107635" },
+      { "name": "Traiteur prestige loucif", "phone": "0778330528" },
+      { "name": "Traiteur El Benna", "phone": "0778330528" }
     ],
     "Serveurs": [
       { "name": "Serveuses cérémonie", "phone": "0557802704" },
@@ -113,7 +129,7 @@
       { "name": "Hichem décor", "phone": "0775506276" }
     ]
   },
-  "Animation": {
+  "DJ": {
     "DJ": [
       { "name": "DJ Naima", "phone": "0773171520" },
       { "name": "Dj amine pro", "phone": "0656164487" },
@@ -131,7 +147,7 @@
     ]
   },
   "Photographe et vidéos": {
-    "Photographes et vidéographes": [
+    "Photographe et vidéos": [
       { "name": "Mehdi ferhat Photographe", "phone": "0540050152" },
       { "name": "Aya Photographe", "phone": "0555045040" },
       { "name": "Sabrine Photography", "phone": "0670910912" },
