@@ -2,14 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/extensions.dart';
+import 'package:flutter_complete_project/features/onboarding/sevices_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/routing/routes.dart';
-import '../home/ui/widgets/doctors_list/events_list_view.dart';
 import '../home/ui/widgets/specializations_list/specializations_bloc_builder.dart';
 import '../login/ui/login_screen.dart';
 import 'logic/cubit/service_providers_cubit.dart';
 import 'logic/cubit/service_providers_state.dart';
-import 'sevices_model.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -19,33 +18,10 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
+  final List<ServiceProviders> selectedServiceProviders = [];
 
   // Updated category screens with JSON data
   final List<Map<String, dynamic>> categoryScreens = [
-    //'screen': LoginScreen(),
-    //         'category': Category(name: 'Home', imageUrl: 'assets/icons/home.png'),
-    //       },
-    //       {
-    //         'category': Category(name: 'Lieu', imageUrl: 'assets/images/lieu.png'),
-    //       },
-    //       {
-    //         'category': Category(name: 'Décoration', imageUrl: 'assets/images/decoration.png'),
-    //       },
-    //       {
-    //         'category': Category(name: 'Animation', imageUrl: 'assets/images/icons8-accordion-100.png'),
-    //       },
-    //       {
-    //         'category': Category(name: 'Photographie', imageUrl: 'assets/images/photographie.png'),
-    //       },
-    //       {
-    //         'category': Category(name: 'Habbillesment \net beauté', imageUrl: 'assets/icons/habbillesment.png'),
-    //       },
-    //       {
-    //         'category': Category(name: 'Gestionnaire \ndes invités', imageUrl: 'assets/icons/gestionnaire.png'),
-    //       },
-    //       {
-    //         'category': Category(name: 'Véhicules \nde mariage', imageUrl: 'assets/images/vehicules.png'),
-    //       },
     {
       'screen': LoginScreen(),
       'category': Category(name: 'Home', imageUrl: 'assets/icons/home.png'),
@@ -62,17 +38,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     {
       'category': Category(name: 'Décoration', imageUrl: 'assets/images/decoration.png'),
     },
-    {/////////////////////////////////////////////
+    {
       'category': Category(name: 'DJ', imageUrl: 'assets/images/icons8-accordion-100.png'),
-    }, {
+    },
+    {
       'category': Category(name: 'Habillement et beauté', imageUrl: 'assets/icons/habbillesment.png'),
-    }, {
+    },
+    {
       'category': Category(name: 'Vehicules et automobile', imageUrl: 'assets/images/vehicules.png'),
     },
-    //Habillement et beauté
-    //Vehicules et automobile
-    //Gestionnaire des invités
-
   ];
 
   void _nextPage() {
@@ -101,6 +75,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
     setState(() {
       _currentIndex = index;
+    });
+  }
+
+  void _toggleSelection(ServiceProviders serviceProvider) {
+    setState(() {
+      if (selectedServiceProviders.contains(serviceProvider)) {
+        selectedServiceProviders.remove(serviceProvider);
+      } else {
+        selectedServiceProviders.add(serviceProvider);
+      }
     });
   }
 
@@ -147,7 +131,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   initial: () => Center(child: Text('Load service providers')),
                                   loading: () => Center(child: CircularProgressIndicator()),
                                   success: (serviceProviders) {
-                                    // Filter the service providers based on the selected category
                                     final filteredServiceProviders = serviceProviders.where((sp) {
                                       return sp.category == category.name;
                                     }).toList();
@@ -155,8 +138,85 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     return ListView.builder(
                                       itemCount: filteredServiceProviders.length,
                                       itemBuilder: (context, index) {
-                                        return ServiceProvidersListViewItem(serviceProviderModel:
-                                           filteredServiceProviders[index],
+                                        final serviceProvider = filteredServiceProviders[index];
+                                        final isSelected = selectedServiceProviders.contains(serviceProvider);
+                                        return InkWell(
+                                          onTap: () {
+                                            context.pushNamed(Routes.DetailsScreen, arguments: serviceProvider);
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.only(bottom: 16.h),
+                                            child: Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/kmll.PNG',
+                                                  width: 110.w,
+                                                  height: 120.h,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error, stackTrace) => Container(
+                                                    width: 110.w,
+                                                    height: 120.h,
+                                                    color: Colors.grey[300],
+                                                    child: Icon(Icons.error, color: Colors.red),
+                                                  ),
+                                                ),
+                                                SizedBox(width: 16.w),
+                                                Expanded(
+                                                  child: Container(
+                                                    height: 120.h,
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          serviceProvider.name ?? 'Service Provider Title',
+                                                          style: TextStyle(
+                                                            fontSize: 14.sp,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.black,
+                                                          ),
+                                                          overflow: TextOverflow.ellipsis,
+                                                        ),
+                                                        SizedBox(height: 5.h),
+                                                        Text(
+                                                          serviceProvider.phone ?? 'No phone number available',
+                                                          style: TextStyle(
+                                                            fontSize: 14.sp,
+                                                            fontWeight: FontWeight.w300,
+                                                            color: Colors.black54,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 10.h),
+                                                        Text(
+                                                          serviceProvider.description ?? 'No description available',
+                                                          style: TextStyle(
+                                                            fontSize: 14.sp,
+                                                            fontWeight: FontWeight.w300,
+                                                            color: Colors.black54,
+                                                          ),
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow.ellipsis,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(width: 16.w),
+                                                InkWell(
+                                                   onTap: () {
+                                                      _toggleSelection(serviceProvider);
+                                                    },
+                                                  child: Image.asset(
+                                                    isSelected
+                                                        ? 'assets/images/cancel.png' // Change the icon if selected
+                                                        : 'assets/images/add.png',
+                                                    width: 35.w,
+                                                    height: 35.h,
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         );
                                       },
                                     );
@@ -174,11 +234,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
             SizedBox(height: 20.h),
-            // Custom Stepper with Icons
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround, // Distribute icons evenly
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(
                   categoryScreens.length,
                       (index) {
@@ -227,6 +286,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       if (_currentIndex == categoryScreens.length - 1) {
                         context.pushNamed(
                           Routes.checkoutScreen,
+                          arguments: selectedServiceProviders,
                         );
                       } else {
                         _nextPage();
@@ -327,3 +387,4 @@ class StepperDot extends StatelessWidget {
     return '$firstLine\n$secondLine';
   }
 }
+

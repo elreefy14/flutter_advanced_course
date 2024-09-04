@@ -8,21 +8,29 @@ import '../../../../../core/routing/routes.dart';
 import '../../../../onboarding/sevices_model.dart';
 
 class ServiceProvidersListViewItem extends StatelessWidget {
-  final ServiceProviders? serviceProviderModel;
+  final ServiceProviders serviceProviderModel;
+  final bool isSelected;
+  final VoidCallback onSelect;
 
-  const ServiceProvidersListViewItem( {super.key, this.serviceProviderModel});
+  const ServiceProvidersListViewItem({
+    Key? key,
+    required this.serviceProviderModel,
+    required this.isSelected,
+    required this.onSelect,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: (){
+        print("sdfsdfsd sdfsz");
         context.pushNamed(Routes.DetailsScreen, arguments: serviceProviderModel);
+
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 16.h),
         child: Row(
           children: [
-            // Use AssetImage for the event image
             Image.asset(
               'assets/images/kmll.PNG',
               width: 110.w,
@@ -37,51 +45,50 @@ class ServiceProvidersListViewItem extends StatelessWidget {
             ),
             SizedBox(width: 16.w),
             Expanded(
-              child: Container(
-                height: 120.h,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      serviceProviderModel?.name ?? 'Service Provider Title',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black, // Adjusted color for consistency
-                      ),
-                      overflow: TextOverflow.ellipsis,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    serviceProviderModel.name,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
-                    SizedBox(height: 5.h),
-                    Text(
-                      serviceProviderModel?.phone ?? 'No phone number available',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black54, // Consistent with the DetailsScreen
-                      ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 5.h),
+                  Text(
+                    serviceProviderModel.phone,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black54,
                     ),
-                    SizedBox(height: 10.h),
-                    Text(
-                      serviceProviderModel?.description ?? 'No description available',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black54, // Consistent with the DetailsScreen
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 10.h),
+                  Text(
+                    serviceProviderModel.description??'no description founded',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black54,
                     ),
-                  ],
-                ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
             ),
             SizedBox(width: 16.w),
-            // Add image icon .png here
-            Image.asset(
-              'assets/images/add.png', // Replace with your actual icon path
-              width: 35.w,
-              height: 35.h,
-              fit: BoxFit.contain,
+            InkWell(
+              onTap:onSelect,
+              child: Image.asset(
+                isSelected ? 'assets/images/done.png' : 'assets/images/add.png',
+                width: 35.w,
+                height: 35.h,
+                fit: BoxFit.contain,
+              ),
             ),
           ],
         ),

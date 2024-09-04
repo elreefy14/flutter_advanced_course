@@ -13,9 +13,7 @@ const kTextLightColor = Color(0xFF6A727D);
 class DetailsScreen extends StatelessWidget {
   final ServiceProviders serviceProvider;
   final CarouselController _controller = CarouselController();
-
   DetailsScreen({super.key, required this.serviceProvider});
-
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);

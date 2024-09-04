@@ -29,7 +29,7 @@ class _SignupFormState extends State<SignupForm> {
   @override
   void initState() {
     super.initState();
-    passwordController = context.read<SignupCubit>().passwordController;
+    passwordController = context.read<CheckOutCubit>().passwordController;
     setupPasswordControllerListener();
   }
 
@@ -49,7 +49,7 @@ class _SignupFormState extends State<SignupForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: context.read<SignupCubit>().formKey,
+      key: context.read<CheckOutCubit>().formKey,
       child: Column(
         children: [
           AppTextFormField(
@@ -59,7 +59,7 @@ class _SignupFormState extends State<SignupForm> {
                 return 'Please enter a valid name';
               }
             },
-            controller: context.read<SignupCubit>().nameController,
+            controller: context.read<CheckOutCubit>().nameController,
           ),
           verticalSpace(18),
           AppTextFormField(
@@ -71,7 +71,7 @@ class _SignupFormState extends State<SignupForm> {
                 return 'Please enter a valid phone number';
               }
             },
-            controller: context.read<SignupCubit>().phoneController,
+            controller: context.read<CheckOutCubit>().phoneController,
           ),
           verticalSpace(18),
           AppTextFormField(
@@ -83,11 +83,11 @@ class _SignupFormState extends State<SignupForm> {
                 return 'Please enter a valid email';
               }
             },
-            controller: context.read<SignupCubit>().emailController,
+            controller: context.read<CheckOutCubit>().emailController,
           ),
           verticalSpace(18),
           AppTextFormField(
-            controller: context.read<SignupCubit>().passwordController,
+            controller: context.read<CheckOutCubit>().passwordController,
             hintText: 'Password',
             isObscureText: isPasswordObscureText,
             suffixIcon: GestureDetector(
@@ -109,7 +109,7 @@ class _SignupFormState extends State<SignupForm> {
           verticalSpace(18),
           AppTextFormField(
             controller:
-                context.read<SignupCubit>().passwordConfirmationController,
+                context.read<CheckOutCubit>().passwordConfirmationController,
             hintText: 'Password Confirmation',
             isObscureText: isPasswordConfirmationObscureText,
             suffixIcon: GestureDetector(

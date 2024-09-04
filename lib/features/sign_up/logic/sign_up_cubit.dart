@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/features/sign_up/data/repos/sign_up_repo.dart';
 import 'package:flutter_complete_project/features/sign_up/logic/sign_up_state.dart';
-
 import '../data/models/sign_up_request_body.dart';
 
-class SignupCubit extends Cubit<SignupState> {
+class CheckOutCubit extends Cubit<SignupState> {
   final SignupRepo _signupRepo;
-  SignupCubit(this._signupRepo) : super(const SignupState.initial());
+  CheckOutCubit(this._signupRepo) : super(const SignupState.initial());
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();

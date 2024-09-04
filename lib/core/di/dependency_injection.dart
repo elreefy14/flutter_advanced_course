@@ -23,7 +23,7 @@ Future<void> setupGetIt() async {
 
   // signup
   getIt.registerLazySingleton<SignupRepo>(() => SignupRepo(getIt()));
-  getIt.registerFactory<SignupCubit>(() => SignupCubit(getIt()));
+  getIt.registerFactory<CheckOutCubit>(() => CheckOutCubit(getIt()));
 
   // home
   getIt.registerLazySingleton<HomeApiService>(() => HomeApiService(dio));

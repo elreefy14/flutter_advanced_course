@@ -6,7 +6,6 @@ import 'package:flutter_complete_project/features/home/ui/home_screen.dart';
 import 'package:flutter_complete_project/features/login/logic/cubit/login_cubit.dart';
 import 'package:flutter_complete_project/features/login/ui/login_screen.dart';
 import 'package:flutter_complete_project/features/onboarding/onboarding_screen.dart';
-
 import '../../features/details_screen/ui/details_screen.dart';
 import '../../features/onboarding/logic/cubit/service_providers_cubit.dart';
  // Import your ServiceProviders model
@@ -21,7 +20,7 @@ class AppRouter {
     final arguments = settings.arguments;
 
     switch (settings.name) {
-      case Routes.onBoardingScreen:
+      case Routes.onBoardingScreen ||Routes.loginScreen :
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => ServiceProvidersCubit()..loadServiceProviders(),
@@ -29,13 +28,13 @@ class AppRouter {
           ),
         );
 
-      case Routes.loginScreen:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => getIt<LoginCubit>(),
-            child:  LoginScreen(),
-          ),
-        );
+      // case Routes.loginScreen:
+      //   return MaterialPageRoute(
+      //     builder: (_) => BlocProvider(
+      //       create: (context) => getIt<LoginCubit>(),
+      //       child:  OnboardingScreen(),
+      //     ),
+      //   );
 
       case Routes.DetailsScreen:
       // Expecting the argument to be of type ServiceProviders
@@ -63,10 +62,13 @@ class AppRouter {
         );
 
       case Routes.checkoutScreen:
-      // Example case: passing a simple argument like an int
-        if (arguments is int) {
+      // Expecting the argument to be of type List<ServiceProviders>
+        if (arguments is List<ServiceProviders>) {
           return MaterialPageRoute(
-            builder: (_) => CheckOutScreen(eventCount: arguments),
+            builder: (_) => CheckOutScreen(
+                serviceProviders:arguments,
+              eventCount: 5,
+            ),
           );
         }
         return _errorRoute();
