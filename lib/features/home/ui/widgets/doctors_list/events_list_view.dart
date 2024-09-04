@@ -4,20 +4,19 @@ import 'package:flutter_complete_project/core/helpers/extensions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../onboarding/logic/cubit/service_providers_cubit.dart';
 import '../../../../onboarding/logic/cubit/service_providers_state.dart';
-import '../../../../onboarding/sevices_model.dart';
 import '../../../../../core/routing/routes.dart';
+import '../../../../onboarding/sevices_model.dart';
 
-// ServiceProvidersListViewItem widget
 class ServiceProvidersListViewItem extends StatelessWidget {
-  final ServiceProviders? ServiceProviderModel;
+  final ServiceProviders? serviceProviderModel;
 
-  const ServiceProvidersListViewItem({super.key, this.ServiceProviderModel});
+  const ServiceProvidersListViewItem( {super.key, this.serviceProviderModel});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.pushNamed(Routes.DetailsScreen);
+        context.pushNamed(Routes.DetailsScreen, arguments: serviceProviderModel);
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 16.h),
@@ -44,32 +43,34 @@ class ServiceProvidersListViewItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      ServiceProviderModel?.name ?? 'Service Provider Title',
+                      serviceProviderModel?.name ?? 'Service Provider Title',
                       style: TextStyle(
-                        fontSize: 18.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue[900],
+                        color: Colors.black, // Adjusted color for consistency
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 5.h),
                     Text(
-                      '${ServiceProviderModel?.phone}',
+                      serviceProviderModel?.phone ?? 'No phone number available',
                       style: TextStyle(
-                        fontSize: 12.sp,
-                        color: Colors.grey[600],
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.black54, // Consistent with the DetailsScreen
                       ),
                     ),
-                    // SizedBox(height: 5.h),
-                    // Text(
-                    //   ServiceProviderModel?.phone ?? 'Service Provider Description',
-                    //   style: TextStyle(
-                    //     fontSize: 12.sp,
-                    //     color: Colors.grey[600],
-                    //   ),
-                    //   maxLines: 2,
-                    //   overflow: TextOverflow.ellipsis,
-                    // ),
+                    SizedBox(height: 10.h),
+                    Text(
+                      serviceProviderModel?.description ?? 'No description available',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.black54, // Consistent with the DetailsScreen
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ],
                 ),
               ),
@@ -84,41 +85,6 @@ class ServiceProvidersListViewItem extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-// ServiceProvidersListScreen widget
-class ServiceProvidersListScreen extends StatelessWidget {
-  final String categoryName;
-
-  const ServiceProvidersListScreen({required this.categoryName});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Service Providers')),
-      body: BlocBuilder<ServiceProvidersCubit, ServiceProvidersState>(
-        builder: (context, state) {
-          return state.when(
-            initial: () => Center(child: Text('Load service providers')),
-            loading: () => Center(child: CircularProgressIndicator()),
-            success: (serviceProviders) {
-              final filteredProviders = serviceProviders.where((provider) {
-                return provider.category == categoryName;
-              }).toList();
-
-              return ListView.builder(
-                itemCount: filteredProviders.length,
-                itemBuilder: (context, index) {
-                  return ServiceProvidersListViewItem(ServiceProviderModel: filteredProviders[index]);
-                },
-              );
-            },
-            error: (error) => Center(child: Text(error)),
-          );
-        },
       ),
     );
   }

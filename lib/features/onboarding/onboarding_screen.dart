@@ -155,8 +155,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     return ListView.builder(
                                       itemCount: filteredServiceProviders.length,
                                       itemBuilder: (context, index) {
-                                        return ServiceProvidersListViewItem(
-                                          ServiceProviderModel: filteredServiceProviders[index],
+                                        return ServiceProvidersListViewItem(serviceProviderModel:
+                                           filteredServiceProviders[index],
                                         );
                                       },
                                     );
