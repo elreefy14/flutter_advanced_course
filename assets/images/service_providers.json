@@ -1,0 +1,162 @@
+{
+  "Evénements sociaux": {
+    "Salles des fêtes": [
+      {
+        "name": "Salle des fêtes Ouzbiha",
+        "phone": "0771 99 95 32",
+        "capacity": "90 personnes",
+        "parking": "40P",
+        "description": "La Salle des Fêtes OUZBIHA est un lieu accueillant, idéal pour des célébrations familiales et des événements intimes. Avec une capacité d’accueil de 90 personnes et un parking de 40 véhicules, son décor est simple mais charmant, cette salle offre une ambiance détendue, parfaite pour les petites réceptions et les rencontres conviviales."
+      },
+      {
+        "name": "Salle des fêtes Idri",
+        "phone": "0668 27 48 85",
+        "capacity": "250 personnes",
+        "parking": "70P",
+        "description": "Raffinée et contemporaine, la Salle des Fêtes IDRI offre un cadre élégant avec des finitions de luxe. Les grands lustres et les murs ornés de miroirs amplifient la lumière et l'espace, créant une atmosphère grandiose pour des réceptions prestigieuses."
+      },
+      {
+        "name": "Salle des fêtes Bouabid",
+        "phone": "0542 67 07 74",
+        "capacity": "120 personnes",
+        "parking": "60P",
+        "description": "La Salle des Fêtes BOUABID combine modernité et tradition avec un intérieur élégant et spacieux. Les tons neutres et le mobilier stylé créent une ambiance chic. Idéale pour les mariages et événements corporatifs, la salle dispose d'une scène et d'un système audiovisuel complet."
+      },
+      {
+        "name": "Salle des fêtes Mazouzi",
+        "phone": "0560 82 21 12",
+        "capacity": "100 personnes",
+        "parking": "45P",
+        "description": "La Salle des Fêtes MAZOUZI se distingue par son décor rustique et raffiné, idéal pour ceux qui recherchent un cadre unique et parfait pour des événements intimes avec une touche d'authenticité."
+      },
+      {
+        "name": "Salle des fêtes Vie la joie",
+        "phone": "0770 68 63 73",
+        "capacity": "200 personnes",
+        "parking": "40P",
+        "description": "Spacieuse et moderne, la Salle des Fêtes Vie la joie est conçue pour accueillir des événements de grande envergure avec confort et style. Les installations comprennent un éclairage LED programmable, une grande scène, et un espace pour le traiteur. La décoration sobre et élégante s’adapte à toutes les occasions."
+      },
+      {
+        "name": "Salle des fêtes Jasmine",
+        "phone": "0770 193 010",
+        "capacity": "140 personnes",
+        "parking": "30P",
+        "description": "La Salle des Fêtes Jasmine est un lieu élégant et parfait pour des événements romantiques comme les mariages. Le décor floral, inspiré par la beauté du jasmin, crée une atmosphère délicate et parfumée. Les couleurs douces et l'éclairage subtil renforcent l'ambiance romantique, faisant de chaque événement un moment inoubliable."
+      },
+      {
+        "name": "Salle des fêtes Choulak",
+        "phone": "0770 99 10 02",
+        "capacity": "220 personnes",
+        "parking": "50P",
+        "description": "Nichée dans un cadre charmant, la Salle des Fêtes Choulak est un espace intime et chaleureux, parfait pour les mariages et les petites célébrations. La décoration classique et raffinée, avec des touches florales délicates, crée une ambiance accueillante. Le service est personnalisé pour répondre aux besoins spécifiques de chaque événement."
+      },
+      {
+        "name": "Salles des fêtes Golden events",
+        "phone": "0779 82 45 79",
+        "capacity": "160 personnes",
+        "parking": "32P",
+        "description": "Moderne et sophistiquée, la Salle des Fêtes Golden events est un lieu prestigieux, parfait pour des événements haut de gamme. Le décor minimaliste mais élégant, avec des matériaux de qualité, crée un cadre chic pour des réceptions luxueuses. Le service est impeccable, assurant une expérience exceptionnelle."
+      },
+      {
+        "name": "Salles des fêtes La pyramide",
+        "phone": "0773 14 73 41",
+        "capacity": "110 personnes",
+        "parking": "70P",
+        "description": "La Salle des Fêtes LA PYRAMIDE offre un cadre chaleureux et accueillant, parfait pour des réceptions conviviales. Les tons chauds et l'éclairage doux créent une ambiance cosy, tandis que l’agencement flexible permet de personnaliser l’espace selon les besoins de l’événement."
+      },
+      {
+        "name": "Salle des fêtes El hana",
+        "phone": "0557 88 50 53",
+        "capacity": "180 personnes",
+        "parking": "80P",
+        "description": "La Salle des Fêtes EL HANA se distingue par son style contemporain et ses installations haut de gamme. L'intérieur spacieux, avec ses plafonds hauts et ses lustres brillants, en fait un choix privilégié pour les grandes réceptions et les galas. Le service est professionnel, garantissant une expérience sans faille."
+      }
+    ]
+  },
+  "Catering": {
+    "Gateaux": [
+      { "name": "Gateaux rima sadeli", "phone": "0656567115" },
+      { "name": "Gateaux de mina", "phone": "0542242914" },
+      { "name": "Gateaux mesk Ellil bejaia", "phone": "0555369931" },
+      { "name": "Mes délécieuses", "phone": "0542752506" },
+      { "name": "Gateaux kenza", "phone": "0551952444" },
+      { "name": "La meringue anosizato", "phone": "0348717237" },
+      { "name": "Gâteaux secs sur commandes", "phone": "0555909399" },
+      { "name": "Les délices de meriem", "phone": "0770964339" }
+    ],
+    "Serveurs": [
+      { "name": "Serveuses cérémonie", "phone": "0557802704" },
+      { "name": "Serveuses de bejaia", "phone": "0778545192" },
+      { "name": "Serveuses de luxe", "phone": "0556766376" },
+      { "name": "Serveuses de bonheur", "phone": "0674928462" },
+      { "name": "Serveuses félécia", "phone": "0792383948" },
+      { "name": "Serveurs de bejaia", "phone": "0796200798" },
+      { "name": "Serveuses pour fetes bejaia", "phone": "0542758050" },
+      { "name": "Serveuses étoile d’or Bejaia", "phone": "0540805243" },
+      { "name": "Serveuses Aokas Bejaia", "phone": "0542863683" }
+    ],
+    "Traiteurs": [
+      { "name": "Yanis cuisiner", "phone": "0553893219" },
+      { "name": "Sofiane cuisinier", "phone": "0540781196" },
+      { "name": "Chef sofiane anarakdim", "phone": "0699033558" },
+      { "name": "Cuisinier el afrah", "phone": "0664107635" },
+      { "name": "Traiteur prestige loucif", "phone": "0778330528" },
+      { "name": "Traiteur El Benna", "phone": "0778330528" }
+    ]
+  },
+  "Décoration": {
+    "Décoration": [
+      { "name": "Décoration ST évents Queen", "phone": "0794410604" },
+      { "name": "Sissa Mameri Décoration", "phone": "0552602350" },
+      { "name": "Thiziri Décoration", "phone": "0779460040" },
+      { "name": "Linda décoration", "phone": "0791518462" },
+      { "name": "Hichem décor", "phone": "0775506276" }
+    ]
+  },
+  "Animation": {
+    "DJ": [
+      { "name": "DJ Naima", "phone": "0773171520" },
+      { "name": "Dj amine pro", "phone": "0656164487" },
+      { "name": "Dj kahina", "phone": "0783119723" },
+      { "name": "DJ Nadjet", "phone": "0561060810" },
+      { "name": "Dj Dounia Ayadi", "phone": "0674982129" },
+      { "name": "DJ Massi", "phone": "0794574903" },
+      { "name": "Dj Vanissa", "phone": "0788193354" },
+      { "name": "Dj Hanin", "phone": "0550239821" },
+      { "name": "Dj Manel bejaia", "phone": "0551090611" },
+      { "name": "Dj hanine de bejaia", "phone": "0555330009" },
+      { "name": "Dj hafsa de bejaia", "phone": "0553914996" },
+      { "name": "Dj nadja de bejaia", "phone": "0555632222" },
+      { "name": "Dj Wassila", "phone": "0555656340" }
+    ]
+  },
+  "Photographe et vidéos": {
+    "Photographes et vidéographes": [
+      { "name": "Mehdi ferhat Photographe", "phone": "0540050152" },
+      { "name": "Aya Photographe", "phone": "0555045040" },
+      { "name": "Sabrine Photography", "phone": "0670910912" },
+      { "name": "Studioman Photographe", "phone": "0550282829" },
+      { "name": "Imed Photography", "phone": "0550262626" }
+    ]
+  },
+  "Habillement et beauté": {
+    "Couture": [
+      { "name": "Couture Lina", "phone": "0792938304" },
+      { "name": "Kenza Couture", "phone": "0561289820" },
+      { "name": "Kenza Fendi Couture", "phone": "0540282727" }
+    ]
+  },
+  "Gestionnaire des invités": {
+    "Hôtes et hôtesses": [
+      { "name": "Hôtes et hôtesses De Luxe", "phone": "0675829458" },
+      { "name": "Hôtes et hôtesses de bejaia", "phone": "0558937263" }
+    ]
+  },
+  "Vehicules et automobile": {
+    "Location des véhicules de mariage": [
+      { "name": "Location véhicule Majestic", "phone": "0549283924" },
+      { "name": "Location véhicules de mariage Kabylie", "phone": "0567467882" },
+      { "name": "Location de voitures bejaia", "phone": "0799384039" }
+    ]
+  }
+}

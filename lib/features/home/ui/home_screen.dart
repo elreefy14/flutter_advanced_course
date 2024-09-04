@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
               verticalSpace(18),
                CategoryScreen(),
               verticalSpace(8),
-              EventsListScreen(eventCount: 10),
+           //   ServiceProvidersListScreen(eventCount: 10),
             ],
           ),
         ),

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/features/home/logic/home_cubit.dart';
@@ -8,6 +8,7 @@ import 'package:flutter_complete_project/features/login/ui/login_screen.dart';
 import 'package:flutter_complete_project/features/onboarding/onboarding_screen.dart';
 
 import '../../features/details_screen/ui/details_screen.dart';
+import '../../features/onboarding/logic/cubit/service_providers_cubit.dart';
 import '../../features/sign_up/logic/sign_up_cubit.dart';
 import '../../features/sign_up/ui/sign_up_screen.dart';
 import '../di/dependency_injection.dart';
@@ -18,17 +19,23 @@ class AppRouter {
     final arguments = settings.arguments;
 
     switch (settings.name) {
-      case Routes.onBoardingScreen:
-        return MaterialPageRoute(
-          builder: (_) =>  OnboardingScreen(),
-        );
-      case Routes.loginScreen:
+      case Routes.onBoardingScreen ||Routes.loginScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => getIt<LoginCubit>(),
-            child:  OnboardingScreen(),
+            create: (context) => ServiceProvidersCubit()..loadServiceProviders(
+
+            ),
+            child: OnboardingScreen(),
           ),
-        ); case Routes.DetailsScreen:
+        );
+      // case Routes.loginScreen:
+      //   return MaterialPageRoute(
+      //     builder: (_) => BlocProvider(
+      //       create: (context) => getIt<LoginCubit>(),
+      //       child:  OnboardingScreen(),
+      //     ),
+      //   );
+        case Routes.DetailsScreen:
         return MaterialPageRoute(
           builder: (_) => DetailsScreen(),
         );

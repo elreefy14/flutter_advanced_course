@@ -1,58 +1,22 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/extensions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:shimmer/shimmer.dart';
-
+import '../../../../onboarding/logic/cubit/service_providers_cubit.dart';
+import '../../../../onboarding/logic/cubit/service_providers_state.dart';
+import '../../../../onboarding/sevices_model.dart';
 import '../../../../../core/routing/routes.dart';
 
-// Event model classes
-class Event {
-  int id;
-  String title;
-  String description;
-  DateTime date;
-  String location;
-  Organizer organizer;
+// ServiceProvidersListViewItem widget
+class ServiceProvidersListViewItem extends StatelessWidget {
+  final ServiceProviders? eventModel;
 
-  Event({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.date,
-    required this.location,
-    required this.organizer,
-  });
-}
-
-class Organizer {
-  int id;
-  String name;
-  String email;
-  String phone;
-  String photo;
-
-  Organizer({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.phone,
-    required this.photo,
-  });
-}
-
-// EventListViewItem widget
-// EventListViewItem widget
-class EventListViewItem extends StatelessWidget {
-  final Event? eventModel;
-
-  const EventListViewItem({super.key, this.eventModel});
+  const ServiceProvidersListViewItem({super.key, this.eventModel});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         context.pushNamed(Routes.DetailsScreen);
       },
       child: Container(
@@ -78,7 +42,7 @@ class EventListViewItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    eventModel?.title ?? 'Event Title',
+                    eventModel?.name ?? 'Service Provider Title',
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
@@ -88,7 +52,7 @@ class EventListViewItem extends StatelessWidget {
                   ),
                   SizedBox(height: 5.h),
                   Text(
-                    '${eventModel?.date.toLocal()} | ${eventModel?.location}',
+                    '${eventModel?.description}',
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: Colors.grey[600],
@@ -96,7 +60,7 @@ class EventListViewItem extends StatelessWidget {
                   ),
                   SizedBox(height: 5.h),
                   Text(
-                    eventModel?.description ?? 'Event Description',
+                    eventModel?.description ?? 'Service Provider Description',
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: Colors.grey[600],
@@ -108,7 +72,7 @@ class EventListViewItem extends StatelessWidget {
               ),
             ),
             SizedBox(width: 16.w),
-            //add image icon .png here
+            // Add image icon .png here
             Image.asset(
               'assets/images/add.png', // Replace with your actual icon path
               width: 35.w,
@@ -122,49 +86,27 @@ class EventListViewItem extends StatelessWidget {
   }
 }
 
-
-// EventsListScreen widget
-class EventsListScreen extends StatelessWidget {
-  final int eventCount;
-
-  EventsListScreen({required this.eventCount});
-
-  List<Event> _generateRandomEvents(int count) {
-    final List<Event> events = [];
-    final random = Random();
-
-    for (int i = 0; i < count; i++) {
-      events.add(Event(
-        id: i + 1,
-        title: 'Service Provider ${i + 1}',
-        description: 'DZD 1200',
-        date: DateTime.now().add(Duration(days: random.nextInt(30))),
-        location: 'Location ${random.nextInt(100)}',
-        organizer: Organizer(
-          id: random.nextInt(100),
-          name: 'Organizer ${random.nextInt(100)}',
-          email: 'organizer${random.nextInt(100)}@mail.com',
-          phone: '123-456-7890',
-          photo: 'https://example.com/organizer_photo.jpg',
-        ),
-      ));
-    }
-
-    return events;
-  }
-
+// ServiceProvidersListScreen widget
+class ServiceProvidersListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final List<Event> events = _generateRandomEvents(eventCount);
-
-    return Expanded(
-      child: ListView.builder(
-        itemCount: events.length,
-        itemBuilder: (context, index) {
-          return EventListViewItem(eventModel: events[index]);
+    return Scaffold(
+      appBar: AppBar(title: Text('Service Providers')),
+      body: BlocBuilder<ServiceProvidersCubit, ServiceProvidersState>(
+        builder: (context, state) {
+          return state.when(
+            initial: () => Center(child: Text('Load service providers')),
+            loading: () => Center(child: CircularProgressIndicator()),
+            success: (serviceProviders) => ListView.builder(
+              itemCount: serviceProviders.length,
+              itemBuilder: (context, index) {
+                return ServiceProvidersListViewItem(eventModel: serviceProviders[index]);
+              },
+            ),
+            error: (error) => Center(child: Text(error)),
+          );
         },
       ),
     );
   }
 }
-
