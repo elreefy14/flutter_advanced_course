@@ -49,6 +49,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     },
   ];
 
+
+
   void _nextPage() {
     if (_currentIndex < categoryScreens.length - 1) {
       _pageController.nextPage(
@@ -237,73 +239,76 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
             SizedBox(height: 20.h),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child:  StepperWidget(
-                  categoryScreens
+            ScrollableStepper(
+              categoryScreens: categoryScreens,
+              currentIndex: _currentIndex,
+              onPageSelected: (index) {
+                _goToPage(index);  // Navigate to the clicked step's page
+              },
+            ),
+
+
+      Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width * 0.45, // 45% of screen width
+              child: ElevatedButton(
+                onPressed: _currentIndex == 0 ? null : _previousPage,
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.grey,
+                  padding: EdgeInsets.symmetric(vertical: 14.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0), // Circular corners
+                  ),
+                ),
+                child: Text(
+                  'Prev',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-
-                    child: ElevatedButton(
-                      onPressed: _currentIndex == 0 ? null : _previousPage,
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.grey,
-                        padding: EdgeInsets.symmetric(vertical: 14.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                      ),
-                      child: Text(
-                        'Prev',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    width: 100.w,
+            Container(
+              width: MediaQuery.of(context).size.width * 0.45, // 45% of screen width
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_currentIndex == categoryScreens.length - 1) {
+                    context.pushNamed(
+                      Routes.checkoutScreen,
+                      arguments: selectedServiceProviders,
+                    );
+                  } else {
+                    _nextPage();
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xFFFF6300),
+                  padding: EdgeInsets.symmetric(vertical: 14.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0), // Circular corners
                   ),
-                  Container(
-                    width: 100.w,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_currentIndex == categoryScreens.length - 1) {
-                          context.pushNamed(
-                            Routes.checkoutScreen,
-                            arguments: selectedServiceProviders,
-                          );
-                        } else {
-                          _nextPage();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Color(0xFFFF6300),
-                        padding: EdgeInsets.symmetric(vertical: 14.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                      ),
-                      child: Text(
-                        _currentIndex == categoryScreens.length - 1 ? 'Checkout' : 'Next',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                ),
+                child: Text(
+                  _currentIndex == categoryScreens.length - 1 ? 'Checkout' : 'Next',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
+                ),
               ),
             ),
           ],
+        ),
+      ),
+
+      ],
         ),
       ),
     );
@@ -311,17 +316,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 }
 
 
-class StepperWidget extends StatefulWidget {
-  final categoryScreens;
-  StepperWidget( this.categoryScreens);
+class ScrollableStepper extends StatefulWidget {
+  final List<Map<String, dynamic>> categoryScreens;
+  final int currentIndex;
+  final Function(int) onPageSelected;
+
+  const ScrollableStepper({
+    super.key,
+    required this.categoryScreens,
+    required this.currentIndex,
+    required this.onPageSelected,
+  });
 
   @override
-  _StepperWidgetState createState() => _StepperWidgetState();
+  _ScrollableStepperState createState() => _ScrollableStepperState();
 }
 
-class _StepperWidgetState extends State<StepperWidget> {
+class _ScrollableStepperState extends State<ScrollableStepper> {
   ScrollController _scrollController = ScrollController();
-  int _currentIndex = 0;
 
   @override
   void dispose() {
@@ -329,74 +341,54 @@ class _StepperWidgetState extends State<StepperWidget> {
     super.dispose();
   }
 
-  void _scrollToLeft() {
+  void _scrollToIndex(int index) {
+    double targetOffset = index * 80.0; // Base scroll position per item
+
+    // Scroll to the right by 2 items if the index is the 5th or beyond
+    if (index >= 4) {
+      targetOffset += 160.0; // Move right by 2 items (80 * 2)
+    }
+    // Scroll to the left by 2 items if the index is the 4th or less
+    else if (index <= 3) {
+      targetOffset -= 160.0; // Move left by 2 items (80 * 2)
+    }
+
     _scrollController.animateTo(
-      _scrollController.offset - 100, // Adjust scroll distance as per your need
+      targetOffset,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
-  }
-
-  void _scrollToRight() {
-    _scrollController.animateTo(
-      _scrollController.offset + 100, // Adjust scroll distance as per your need
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-  }
-
-  void _goToPage(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Row(
-        children: [
-          // Left Arrow Button
-          IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: _scrollToLeft,
-          ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        controller: _scrollController,
+        child: Row(
+          children: List.generate(
+            widget.categoryScreens.length,
+                (index) {
+              final isActive = widget.currentIndex == index;
+              final imageUrl = widget.categoryScreens[index]['category']?.imageUrl ?? 'assets/icons/default.png';
 
-          // Scrollable List of StepperDots
-          Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              controller: _scrollController,
-              child: Row(
-                children: List.generate(
-                  widget.categoryScreens.length,
-                      (index) {
-                    final isActive = _currentIndex == index;
-                    final imageUrl = widget.categoryScreens[index]['category'] != null
-                        ? widget.categoryScreens[index]['category'].imageUrl
-                        : 'assets/icons/default.png';
-
-                    return StepperDot(
-                      imageUrl: imageUrl,
-                      categoryName: widget.categoryScreens[index]['category'] != null
-                          ? widget.categoryScreens[index]['category'].name
-                          : '',
-                      isActive: isActive,
-                      onTap: () => _goToPage(index),
-                    );
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: StepperDot(
+                  imageUrl: imageUrl,
+                  categoryName: widget.categoryScreens[index]['category']?.name ?? '',
+                  isActive: isActive,
+                  onTap: () {
+                    widget.onPageSelected(index);
+                    _scrollToIndex(index);
                   },
                 ),
-              ),
-            ),
+              );
+            },
           ),
-
-          // Right Arrow Button
-          IconButton(
-            icon: const Icon(Icons.arrow_forward_ios),
-            onPressed: _scrollToRight,
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -409,12 +401,12 @@ class StepperDot extends StatelessWidget {
   final VoidCallback onTap;
 
   const StepperDot({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.categoryName,
     this.isActive = false,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -425,16 +417,16 @@ class StepperDot extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(4.0), // Increased padding for larger items
+            padding: const EdgeInsets.all(4.0),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
                 color: isActive ? Colors.blue : Colors.grey,
-                width: 2.0, // Increased border width for better visibility
+                width: 2.0,
               ),
             ),
             child: CircleAvatar(
-              radius: isActive ? 24 : 20, // Increased radius for larger size
+              radius: isActive ? 24 : 20,
               backgroundImage: AssetImage(imageUrl),
               backgroundColor: Colors.transparent,
             ),
@@ -471,7 +463,6 @@ class StepperDot extends StatelessWidget {
     return '$firstLine\n$secondLine';
   }
 }
-
 
 
 
