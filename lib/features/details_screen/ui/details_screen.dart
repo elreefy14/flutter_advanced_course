@@ -5,7 +5,7 @@ import '../../onboarding/sevices_model.dart';
 import 'components/order_button.dart';
 import 'components/title_price_rating.dart';
 
-const kPrimaryColor = Color(0xFFFFC61F);
+const kPrimaryColor = Color(0xFFFF6300);
 const kSecondaryColor = Color(0xFFB5BFD0);
 const kTextColor = Color(0xFF50505D);
 const kTextLightColor = Color(0xFF6A727D);
@@ -47,8 +47,8 @@ class DetailsScreen extends StatelessWidget {
                   InkWell(
                     child: SizedBox(
                       width: width,
-                      child: Image.asset(
-                        'assets/images/burger.png', // Placeholder image
+                      child: Image.network(
+                        serviceProvider.image!, // Placeholder image
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -102,11 +102,12 @@ class DetailsScreen extends StatelessWidget {
       children: [
         SizedBox(height: 20),
         TitlePriceRating(
+          price :serviceProvider.price!,
           name: serviceProvider.name,
           numOfReviews: 24, // Dummy value for reviews
           rating: 4.5, // Dummy value for rating
-          price: 100, // Dummy value for price
-          onRatingChanged: (value) {},
+          onRatingChanged: (value) {
+          },
         ),
         SizedBox(height: 10),
         Text(

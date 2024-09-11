@@ -38,9 +38,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     {
       'category': Category(name: 'Décoration', imageUrl: 'assets/images/decoration.png'),
     },
-    {
-      'category': Category(name: 'DJ', imageUrl: 'assets/images/icons8-accordion-100.png'),
-    },
+    // {
+    //   'category': Category(name: 'DJ', imageUrl: 'assets/images/icons8-accordion-100.png'),
+    // },
     {
       'category': Category(name: 'Habillement et beauté', imageUrl: 'assets/icons/habbillesment.png'),
     },
@@ -148,8 +148,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                             margin: EdgeInsets.only(bottom: 16.h),
                                             child: Row(
                                               children: [
-                                                Image.asset(
-                                                  'assets/images/kmll.PNG',
+                                                Image.network(
+                                                  serviceProvider.image ?? 'https://via.placeholder.com/110x120.png', // Use a placeholder if image URL is null
                                                   width: 110.w,
                                                   height: 120.h,
                                                   fit: BoxFit.cover,
@@ -178,16 +178,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                                         ),
                                                         SizedBox(height: 5.h),
                                                         Text(
-                                                          serviceProvider.phone ?? 'No phone number available',
+                                                          serviceProvider.description ?? 'No phone number available',
+                                                         maxLines: 3,
+                                                          overflow: TextOverflow.ellipsis,
                                                           style: TextStyle(
                                                             fontSize: 14.sp,
                                                             fontWeight: FontWeight.w300,
                                                             color: Colors.black54,
+
                                                           ),
                                                         ),
                                                         SizedBox(height: 10.h),
                                                         Text(
-                                                          serviceProvider.description ?? 'No description available',
+                                                          serviceProvider.price.toString()+' DZD' ,
                                                           style: TextStyle(
                                                             fontSize: 14.sp,
                                                             fontWeight: FontWeight.w300,
@@ -202,9 +205,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                                 ),
                                                 SizedBox(width: 16.w),
                                                 InkWell(
-                                                   onTap: () {
-                                                      _toggleSelection(serviceProvider);
-                                                    },
+                                                  onTap: () {
+                                                    _toggleSelection(serviceProvider);
+                                                  },
                                                   child: Image.asset(
                                                     isSelected
                                                         ? 'assets/images/cancel.png' // Change the icon if selected
@@ -236,26 +239,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             SizedBox(height: 20.h),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: List.generate(
-                  categoryScreens.length,
-                      (index) {
-                    final isActive = _currentIndex == index;
-                    final imageUrl = categoryScreens[index]['category'] != null
-                        ? categoryScreens[index]['category'].imageUrl
-                        : 'assets/icons/default.png';
-
-                    return StepperDot(
-                      imageUrl: imageUrl,
-                      categoryName: categoryScreens[index]['category'] != null
-                          ? categoryScreens[index]['category'].name
-                          : '',
-                      isActive: isActive,
-                      onTap: () => _goToPage(index),
-                    );
-                  },
-                ),
+              child:  StepperWidget(
+                  categoryScreens
               ),
             ),
             Padding(
@@ -263,48 +248,55 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: _currentIndex == 0 ? null : _previousPage,
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.grey,
-                      padding: EdgeInsets.symmetric(vertical: 14.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                  Container(
+
+                    child: ElevatedButton(
+                      onPressed: _currentIndex == 0 ? null : _previousPage,
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.grey,
+                        padding: EdgeInsets.symmetric(vertical: 14.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      child: Text(
+                        'Prev',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    child: Text(
-                      'Prev',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    width: 100.w,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_currentIndex == categoryScreens.length - 1) {
-                        context.pushNamed(
-                          Routes.checkoutScreen,
-                          arguments: selectedServiceProviders,
-                        );
-                      } else {
-                        _nextPage();
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Color(0xFF2980B9),
-                      padding: EdgeInsets.symmetric(vertical: 14.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                  Container(
+                    width: 100.w,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_currentIndex == categoryScreens.length - 1) {
+                          context.pushNamed(
+                            Routes.checkoutScreen,
+                            arguments: selectedServiceProviders,
+                          );
+                        } else {
+                          _nextPage();
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Color(0xFFFF6300),
+                        padding: EdgeInsets.symmetric(vertical: 14.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      _currentIndex == categoryScreens.length - 1 ? 'Checkout' : 'Next',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
+                      child: Text(
+                        _currentIndex == categoryScreens.length - 1 ? 'Checkout' : 'Next',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -318,6 +310,98 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 }
 
+
+class StepperWidget extends StatefulWidget {
+  final categoryScreens;
+  StepperWidget( this.categoryScreens);
+
+  @override
+  _StepperWidgetState createState() => _StepperWidgetState();
+}
+
+class _StepperWidgetState extends State<StepperWidget> {
+  ScrollController _scrollController = ScrollController();
+  int _currentIndex = 0;
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToLeft() {
+    _scrollController.animateTo(
+      _scrollController.offset - 100, // Adjust scroll distance as per your need
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _scrollToRight() {
+    _scrollController.animateTo(
+      _scrollController.offset + 100, // Adjust scroll distance as per your need
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _goToPage(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Row(
+        children: [
+          // Left Arrow Button
+          IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: _scrollToLeft,
+          ),
+
+          // Scrollable List of StepperDots
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              controller: _scrollController,
+              child: Row(
+                children: List.generate(
+                  widget.categoryScreens.length,
+                      (index) {
+                    final isActive = _currentIndex == index;
+                    final imageUrl = widget.categoryScreens[index]['category'] != null
+                        ? widget.categoryScreens[index]['category'].imageUrl
+                        : 'assets/icons/default.png';
+
+                    return StepperDot(
+                      imageUrl: imageUrl,
+                      categoryName: widget.categoryScreens[index]['category'] != null
+                          ? widget.categoryScreens[index]['category'].name
+                          : '',
+                      isActive: isActive,
+                      onTap: () => _goToPage(index),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+
+          // Right Arrow Button
+          IconButton(
+            icon: const Icon(Icons.arrow_forward_ios),
+            onPressed: _scrollToRight,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class StepperDot extends StatelessWidget {
   final String imageUrl;
   final String categoryName;
@@ -325,12 +409,12 @@ class StepperDot extends StatelessWidget {
   final VoidCallback onTap;
 
   const StepperDot({
-    super.key,
+    Key? key,
     required this.imageUrl,
     required this.categoryName,
     this.isActive = false,
     required this.onTap,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -341,26 +425,26 @@ class StepperDot extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(2.0),
+            padding: const EdgeInsets.all(4.0), // Increased padding for larger items
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
                 color: isActive ? Colors.blue : Colors.grey,
-                width: 1.0,
+                width: 2.0, // Increased border width for better visibility
               ),
             ),
             child: CircleAvatar(
-              radius: isActive ? 19 : 16.5,
+              radius: isActive ? 24 : 20, // Increased radius for larger size
               backgroundImage: AssetImage(imageUrl),
               backgroundColor: Colors.transparent,
             ),
           ),
-          if (isActive) const SizedBox(height: 4),
+          if (isActive) const SizedBox(height: 6),
           if (isActive)
             Text(
               displayName,
-              style: TextStyle(
-                fontSize: 10.sp,
+              style: const TextStyle(
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue,
               ),
@@ -381,10 +465,13 @@ class StepperDot extends StatelessWidget {
     }
 
     int midIndex = (words.length / 2).ceil();
-    String firstLine = words.sublist(0, 1).join(' ');
-    String secondLine = words.sublist(1, 3).join(' ');
+    String firstLine = words.sublist(0, midIndex).join(' ');
+    String secondLine = words.sublist(midIndex).join(' ');
 
     return '$firstLine\n$secondLine';
   }
 }
+
+
+
 

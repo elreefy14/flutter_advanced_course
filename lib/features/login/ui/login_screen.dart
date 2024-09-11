@@ -60,58 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             SizedBox(height: 20),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              height: 60,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(
-                  color: Color(0xFFE5E5E5),
-                ),
-              ),
-              child: Row(
-                children: <Widget>[
-                  SvgPicture.asset("assets/icons/maps-and-flags.svg"),
-                  SizedBox(width: 20),
-                  Expanded(
-                    child: DropdownButton(
-                      isExpanded: true,
-                      underline: SizedBox(),
-                      icon: SvgPicture.asset("assets/icons/dropdown.svg"),
-                      value: "Indonesia",
-                      items: [
-                        'Indonesia',
-                        'Bangladesh',
-                        'United States',
-                        'Japan'
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (value) {},
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            // Padding(
-            //   padding:  EdgeInsets.symmetric(horizontal: 20.w),
-            //   child: Text(
-            //     'choose event type :',
-            //     style: TextStyles.font24BlackBold.copyWith(
-            //         fontSize: 18,
-            //         fontWeight: FontWeight.w600
-            //
-            //     ),
-            //   ),
-            // ),
-            SizedBox(height: 20),
             // Container(
             //   margin: EdgeInsets.symmetric(horizontal: 20),
             //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -126,17 +74,19 @@ class _LoginScreenState extends State<LoginScreen> {
             //   ),
             //   child: Row(
             //     children: <Widget>[
-            //      // SvgPicture.asset("assets/icons/maps-and-flags.svg"),
-            //     //  SizedBox(width: 20),
+            //       SvgPicture.asset("assets/icons/maps-and-flags.svg"),
+            //       SizedBox(width: 20),
             //       Expanded(
             //         child: DropdownButton(
             //           isExpanded: true,
             //           underline: SizedBox(),
             //           icon: SvgPicture.asset("assets/icons/dropdown.svg"),
-            //           value: "scientific event",
+            //           value: "Indonesia",
             //           items: [
-            //             'scientific event',
-            //             'Social event',
+            //             'Indonesia',
+            //             'Bangladesh',
+            //             'United States',
+            //             'Japan'
             //           ].map<DropdownMenuItem<String>>((String value) {
             //             return DropdownMenuItem<String>(
             //               value: value,
@@ -149,7 +99,57 @@ class _LoginScreenState extends State<LoginScreen> {
             //     ],
             //   ),
             // ),
-            // SizedBox(height: 20),
+            SizedBox(height: 20),
+            // Padding(
+            //   padding:  EdgeInsets.symmetric(horizontal: 20.w),
+            //   child: Text(
+            //     'choose event type :',
+            //     style: TextStyles.font24BlackBold.copyWith(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.w600
+            //
+            //     ),
+            //   ),
+            // ),
+            SizedBox(height: 20),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              height: 60,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(
+                  color: Color(0xFFE5E5E5),
+                ),
+              ),
+              child: Row(
+                children: <Widget>[
+                 // SvgPicture.asset("assets/icons/maps-and-flags.svg"),
+                //  SizedBox(width: 20),
+                  Expanded(
+                    child: DropdownButton(
+                      isExpanded: true,
+                      underline: SizedBox(),
+                      icon: SvgPicture.asset("assets/icons/dropdown.svg"),
+                      value: "scientific event",
+                      items: [
+                        'scientific event',
+                        'Social event',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (value) {},
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
             // Padding(
             //   padding: EdgeInsets.symmetric(horizontal: 20.w),
             //   child: Container(
@@ -293,8 +293,10 @@ class _MyHeaderState extends State<MyHeader> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Color(0xFF2C3E50), // Darker shade of blue
-              Color(0xFF2980B9), // Lighter shade of blue
+              Color(0xFFFF6300), // Bright orange
+              Color(0xFFFFA500), // Lighter orange/yellow tone
+              // Color(0xFF2C3E50), // Darker shade of blue
+              // Color(0xFF2980B9), // Lighter shade of blue
               //Color(0xFF0593B8), // Lighter shade of blue
               //Color(0xFF2DFFF5), // Darker shade of blue
             ],

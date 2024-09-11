@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
-
 import '../../../../core/theming/styles.dart';
-const kPrimaryColor = Color(0xFFFFC61F);
+const kPrimaryColor = Color(0xFFFF6300);
 const ksecondaryColor = Color(0xFFB5BFD0);
 const kTextColor = Color(0xFF50505D);
 const kTextLightColor = Color(0xFF6A727D);
 class TitlePriceRating extends StatelessWidget {
-  final int price, numOfReviews;
-  final double rating;
+  final String price;
+  final int numOfReviews;
+  final double rating ;
   final String name;
   final RatingChangeCallback onRatingChanged;
   const TitlePriceRating({
@@ -56,19 +56,21 @@ class TitlePriceRating extends StatelessWidget {
     );
   }
 
-  ClipPath priceTag(BuildContext context, {required int price}) {
+  ClipPath priceTag(BuildContext context, {required String price}) {
     return ClipPath(
       clipper: PricerCliper(),
       child: Container(
-        alignment: Alignment.topCenter,
+        //alignment: Alignment.topCenter,
         padding: EdgeInsets.symmetric(vertical: 15),
         height: 66,
         width: 65,
         color: kPrimaryColor,
-        child: Text(
-          "\$$price",
-          style:TextStyles.font18WhiteMedium
-              .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+        child: Center(
+          child: Text(
+            "\$$price",
+            style:TextStyles.font18WhiteMedium
+                .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
         ),
       ),
     );

@@ -8,9 +8,11 @@ class ServiceProviders {
   final String subCategory;
   final String name;
   final String phone;
-  final String? capacity; // Made optional
-  final String? parking;  // Made optional
-  final String? description; // Made optional
+  final String? capacity;
+  final String? parking;
+  final String? description;
+  final String? image;
+  final String? price; // Added price field
 
   ServiceProviders({
     required this.category,
@@ -20,6 +22,8 @@ class ServiceProviders {
     this.capacity,
     this.parking,
     this.description,
+    this.image,
+    this.price,
   });
 
   factory ServiceProviders.fromJson(String category, String subCategory, Map<String, dynamic> json) {
@@ -28,12 +32,15 @@ class ServiceProviders {
       subCategory: subCategory,
       name: json['name'],
       phone: json['phone'],
-      capacity: json['capacity'], // Safely accessed
-      parking: json['parking'],   // Safely accessed
-      description: json['description'], // Safely accessed
+      capacity: json['capacity'],
+      parking: json['parking'],
+      description: json['description'],
+      image: json['image'],
+      price: json['price'].toString() , // Handle price conversion
     );
   }
 }
+
 
 class Organizer {
   final String name;

@@ -57,8 +57,8 @@ class CheckOutScreen extends StatelessWidget {
                               margin: EdgeInsets.only(bottom: 16.h),
                               child: Row(
                                 children: [
-                                  Image.asset(
-                                    'assets/images/kmll.PNG',
+                                  Image.network(
+                                    serviceProvider.image!,
                                     width: 110.w,
                                     height: 120.h,
                                     fit: BoxFit.cover,
@@ -87,16 +87,19 @@ class CheckOutScreen extends StatelessWidget {
                                           ),
                                           SizedBox(height: 5.h),
                                           Text(
-                                            serviceProvider.phone ?? 'No phone number available',
+                                            serviceProvider.description ?? 'No description available for this service',
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                               fontSize: 14.sp,
                                               fontWeight: FontWeight.w300,
                                               color: Colors.black54,
+
                                             ),
                                           ),
                                           SizedBox(height: 10.h),
                                           Text(
-                                            serviceProvider.description ?? 'No description available',
+                                            serviceProvider.price.toString()+' DZD' ,
                                             style: TextStyle(
                                               fontSize: 14.sp,
                                               fontWeight: FontWeight.w300,
@@ -136,7 +139,7 @@ class CheckOutScreen extends StatelessWidget {
                             width: 65.w,
                             height: 65.h,
                             decoration: BoxDecoration(
-                              color: Color(0xFF2980B9), // Updated color
+                              color: Color(0xFFFF6300), // Updated color
                               borderRadius: BorderRadius.circular(12.r),
                             ),
                             child: const Column(
@@ -189,7 +192,7 @@ class CheckOutScreen extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 30.w),
-                        backgroundColor: Color(0xFF2980B9), // Updated color
+                        backgroundColor: Color(0xFFFF6300), // Updated color
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.r),
                         ),

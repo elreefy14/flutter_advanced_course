@@ -3,7 +3,7 @@ import 'package:flutter_complete_project/features/details_screen/ui/components/t
 
 import 'item_image.dart';
 import 'order_button.dart';
-const kPrimaryColor = Color(0xFFFFC61F);
+const kPrimaryColor = Color(0xFFFF6300);
 const ksecondaryColor = Color(0xFFB5BFD0);
 const kTextColor = Color(0xFF50505D);
 const kTextLightColor = Color(0xFF6A727D);
@@ -46,7 +46,7 @@ class ItemInfo extends StatelessWidget {
             name: "Cheese Burger",
             numOfReviews: 24,
             rating: 4,
-            price: 15,
+            price: '150',
             onRatingChanged: (value) {},
           ),
           Text(
