@@ -24,36 +24,63 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentIndex = 0;
   final List<ServiceProviders> selectedServiceProviders = [];
 
-  // Updated category screens with JSON data
-  final List<Map<String, dynamic>> categoryScreens = [
-    {
-      'screen': LoginScreen(),
-      'category': Category(name: 'Home', imageUrl: 'assets/icons/home.png'),
-    },
-    {
-      'category': Category(name: 'Salles des fêtes', imageUrl: 'assets/images/lieu.png'),
-    },
-    {
-      'category': Category(name: 'Catering', imageUrl: 'assets/images/icons8-kawaii-steak-100.png'),
-    },
-    {
-      'category': Category(name: 'Photographe et vidéos', imageUrl: 'assets/images/photographie.png'),
-    },
-    {
-      'category': Category(name: 'Décoration', imageUrl: 'assets/images/decoration.png'),
-    },
-    // {
-    //   'category': Category(name: 'DJ', imageUrl: 'assets/images/icons8-accordion-100.png'),
-    // },
-    {
-      'category': Category(name: 'Habillement et beauté', imageUrl: 'assets/icons/habbillesment.png'),
-    },
-    {
-      'category': Category(name: 'Vehicules et automobile', imageUrl: 'assets/images/vehicules.png'),
-    },
-  ];
+  // Category screens for both social and non-social events
+  late final List<Map<String, dynamic>> categoryScreens;
 
+  @override
+  void initState() {
+    super.initState();
+    if (widget.isSocialEvent) {
+      // Social Event Categories
+      categoryScreens = [
+        {
+          'category': Category(name: 'Salles des fêtes', imageUrl: 'assets/images/lieu.png'),
+        },
+        // {
+        //   'screen': LoginScreen(),
+        //   'category': Category(name: 'Home', imageUrl: 'assets/icons/home.png'),
+        // },
 
+        {
+          'category': Category(name: 'Catering', imageUrl: 'assets/images/icons8-kawaii-steak-100.png'),
+        },
+        {
+          'category': Category(name: 'Photographe et vidéos', imageUrl: 'assets/images/photographie.png'),
+        },
+        {
+          'category': Category(name: 'Décoration', imageUrl: 'assets/images/decoration.png'),
+        },
+        {
+          'category': Category(name: 'Habillement et beauté', imageUrl: 'assets/icons/habbillesment.png'),
+        },
+        {
+          'category': Category(name: 'Vehicules et automobile', imageUrl: 'assets/images/vehicules.png'),
+        },
+      ];
+    } else {
+      // Non-Social Event Categories (based on provided JSON)
+      categoryScreens = [
+        {
+          'category': Category(name: 'conference_halls', imageUrl: 'assets/images/salle_de_conference.png'),
+        },
+        {
+          'category': Category(name: 'services_technical_audio', imageUrl: 'assets/images/audio_services.png'),
+        },
+        {
+          'category': Category(name: 'catering_services',  imageUrl: 'assets/images/icons8-kawaii-steak-100.png'),
+        },
+        {
+          'category': Category(name: 'logistic_support', imageUrl: 'assets/images/logistic_support.png'),
+        },
+        {
+          'category': Category(name: 'communication_services', imageUrl: 'assets/images/communication_services.png'),
+        },
+        {
+          'category': Category(name: 'hotels', imageUrl: 'assets/images/hotels.png'),
+        },
+      ];
+    }
+  }
 
   void _nextPage() {
     if (_currentIndex < categoryScreens.length - 1) {
@@ -97,232 +124,218 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-  create: (context) =>
-     ServiceProvidersCubit()
-    ..loadServiceProviders(isSocialEvent: widget.isSocialEvent),
-  child: Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-                itemCount: categoryScreens.length,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return categoryScreens[index]['screen'];
-                  } else {
-                    final categoryInfo = categoryScreens[index];
-                    final category = categoryInfo['category'] as Category;
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Text(
-                            'Choose a service for ${category.name}:',
-                            style: TextStyle(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.bold,
+      create: (context) =>
+      ServiceProvidersCubit()..loadServiceProviders(isSocialEvent: widget.isSocialEvent),
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: PageView.builder(
+                  controller: _pageController,
+                  onPageChanged: (index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                  itemCount: categoryScreens.length,
+                  itemBuilder: (context, index) {
+                    if (false) {
+                    //if (index == 0 && widget.isSocialEvent) {
+                      return categoryScreens[index]['screen'];
+                    } else {
+                      final categoryInfo = categoryScreens[index];
+                      final category = categoryInfo['category'] as Category;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Text(
+                              'Choose a service for ${category.name}:',
+                              style: TextStyle(
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: BlocBuilder<ServiceProvidersCubit, ServiceProvidersState>(
-                              builder: (context, state) {
-                                return state.when(
-                                  initial: () => Center(child: Text('Load service providers')),
-                                  loading: () => Center(child: CircularProgressIndicator()),
-                                  success: (serviceProviders) {
-                                    final filteredServiceProviders = serviceProviders.where((sp) {
-                                      return sp.category == category.name;
-                                    }).toList();
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: BlocBuilder<ServiceProvidersCubit, ServiceProvidersState>(
+                                builder: (context, state) {
+                                  return state.when(
+                                    initial: () => Center(child: Text('Load service providers')),
+                                    loading: () => Center(child: CircularProgressIndicator()),
+                                    success: (serviceProviders) {
+                                      final filteredServiceProviders = serviceProviders.where((sp) {
+                                        return sp.category == category.name;
+                                      }).toList();
 
-                                    return ListView.builder(
-                                      itemCount: filteredServiceProviders.length,
-                                      itemBuilder: (context, index) {
-                                        final serviceProvider = filteredServiceProviders[index];
-                                        final isSelected = selectedServiceProviders.contains(serviceProvider);
-                                        return InkWell(
-                                          onTap: () {
-                                            context.pushNamed(Routes.DetailsScreen, arguments: serviceProvider);
-                                          },
-                                          child: Container(
-                                            margin: EdgeInsets.only(bottom: 16.h),
-                                            child: Row(
-                                              children: [
-                                                Image.network(
-                                                  serviceProvider.image ?? 'https://via.placeholder.com/110x120.png', // Use a placeholder if image URL is null
-                                                  width: 110.w,
-                                                  height: 120.h,
-                                                  fit: BoxFit.cover,
-                                                  errorBuilder: (context, error, stackTrace) => Container(
+                                      return ListView.builder(
+                                        itemCount: filteredServiceProviders.length,
+                                        itemBuilder: (context, index) {
+                                          final serviceProvider = filteredServiceProviders[index];
+                                          final isSelected = selectedServiceProviders.contains(serviceProvider);
+                                          return InkWell(
+                                            onTap: () {
+                                              context.pushNamed(Routes.DetailsScreen, arguments: serviceProvider);
+                                            },
+                                            child: Container(
+                                              margin: EdgeInsets.only(bottom: 16.h),
+                                              child: Row(
+                                                children: [
+                                                  Image.network(
+                                                    serviceProvider.image ?? 'https://via.placeholder.com/110x120.png',
                                                     width: 110.w,
                                                     height: 120.h,
-                                                    color: Colors.grey[300],
-                                                    child: Icon(Icons.error, color: Colors.red),
-                                                  ),
-                                                ),
-                                                SizedBox(width: 16.w),
-                                                Expanded(
-                                                  child: Container(
-                                                    height: 120.h,
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        Text(
-                                                          serviceProvider.name ?? 'Service Provider Title',
-                                                          style: TextStyle(
-                                                            fontSize: 14.sp,
-                                                            fontWeight: FontWeight.bold,
-                                                            color: Colors.black,
-                                                          ),
-                                                          overflow: TextOverflow.ellipsis,
-                                                        ),
-                                                        SizedBox(height: 5.h),
-                                                        Text(
-                                                          serviceProvider.description ?? 'No phone number available',
-                                                         maxLines: 3,
-                                                          overflow: TextOverflow.ellipsis,
-                                                          style: TextStyle(
-                                                            fontSize: 14.sp,
-                                                            fontWeight: FontWeight.w300,
-                                                            color: Colors.black54,
-
-                                                          ),
-                                                        ),
-                                                        SizedBox(height: 10.h),
-                                                        Text(
-                                                          serviceProvider.price.toString()+' DZD' ,
-                                                          style: TextStyle(
-                                                            fontSize: 14.sp,
-                                                            fontWeight: FontWeight.w300,
-                                                            color: Colors.black54,
-                                                          ),
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow.ellipsis,
-                                                        ),
-                                                      ],
+                                                    fit: BoxFit.cover,
+                                                    errorBuilder: (context, error, stackTrace) => Container(
+                                                      width: 110.w,
+                                                      height: 120.h,
+                                                      color: Colors.grey[300],
+                                                      child: Icon(Icons.error, color: Colors.red),
                                                     ),
                                                   ),
-                                                ),
-                                                SizedBox(width: 16.w),
-                                                InkWell(
-                                                  onTap: () {
-                                                    _toggleSelection(serviceProvider);
-                                                  },
-                                                  child: Image.asset(
-                                                    isSelected
-                                                        ? 'assets/images/cancel.png' // Change the icon if selected
-                                                        : 'assets/images/add.png',
-                                                    width: 35.w,
-                                                    height: 35.h,
-                                                    fit: BoxFit.contain,
+                                                  SizedBox(width: 16.w),
+                                                  Expanded(
+                                                    child: Container(
+                                                      height: 120.h,
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                            serviceProvider.name ?? 'Service Provider Title',
+                                                            style: TextStyle(
+                                                              fontSize: 14.sp,
+                                                              fontWeight: FontWeight.bold,
+                                                              color: Colors.black,
+                                                            ),
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                          SizedBox(height: 5.h),
+                                                          Text(
+                                                            serviceProvider.description ??
+                                                                'No phone number available',
+                                                            maxLines: 3,
+                                                            overflow: TextOverflow.ellipsis,
+                                                            style: TextStyle(
+                                                              fontSize: 14.sp,
+                                                              fontWeight: FontWeight.w300,
+                                                              color: Colors.black54,
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 10.h),
+                                                          Text(
+                                                            serviceProvider.price.toString() + ' DZD',
+                                                            style: TextStyle(
+                                                              fontSize: 14.sp,
+                                                              fontWeight: FontWeight.w300,
+                                                              color: Colors.black54,
+                                                            ),
+                                                            maxLines: 2,
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                  SizedBox(width: 16.w),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      _toggleSelection(serviceProvider);
+                                                    },
+                                                    child: Image.asset(
+                                                      isSelected
+                                                          ? 'assets/images/cancel.png'
+                                                          : 'assets/images/add.png',
+                                                      width: 35.w,
+                                                      height: 35.h,
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  error: (error) => Center(child: Text(error)),
-                                );
-                              },
+                                          );
+                                        },
+                                      );
+                                    },
+                                    error: (error) => Center(child: Text(error)),
+                                  );
+                                },
+                              ),
                             ),
                           ),
+                        ],
+                      );
+                    }
+                  },
+                ),
+              ),
+              SizedBox(height: 20.h),
+              ScrollableStepper(
+                categoryScreens: categoryScreens,
+                currentIndex: _currentIndex,
+                onPageSelected: (index) {
+                  _goToPage(index); // Navigate to the clicked step's page
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      child: ElevatedButton(
+                        onPressed: _currentIndex == 0 ? null : _previousPage,
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.grey,
+                          padding: EdgeInsets.symmetric(vertical: 14.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
                         ),
-                      ],
-                    );
-                  }
-                },
-              ),
-            ),
-            SizedBox(height: 20.h),
-            ScrollableStepper(
-              categoryScreens: categoryScreens,
-              currentIndex: _currentIndex,
-              onPageSelected: (index) {
-                _goToPage(index);  // Navigate to the clicked step's page
-              },
-            ),
+                        child: Text('Précédent'),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      child: ElevatedButton(
 
-
-      Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width * 0.45, // 45% of screen width
-              child: ElevatedButton(
-                onPressed: _currentIndex == 0 ? null : _previousPage,
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.grey,
-                  padding: EdgeInsets.symmetric(vertical: 14.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0), // Circular corners
-                  ),
-                ),
-                child: Text(
-                  'Prev',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                        onPressed: _currentIndex == categoryScreens.length - 1
+                            ? () {
+                          // Navigate to checkout
+                          context.pushNamed(
+                            Routes.checkoutScreen,
+                            arguments: selectedServiceProviders,
+                          );
+                        }
+                            : _nextPage,
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color(0xFFFF6300),
+                          padding: EdgeInsets.symmetric(vertical: 14.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                        child: Text(_currentIndex == categoryScreens.length - 1 ? 'Paiement' : 'Suivant'),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.45, // 45% of screen width
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_currentIndex == categoryScreens.length - 1) {
-                    context.pushNamed(
-                      Routes.checkoutScreen,
-                      arguments: selectedServiceProviders,
-                    );
-                  } else {
-                    _nextPage();
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color(0xFFFF6300),
-                  padding: EdgeInsets.symmetric(vertical: 14.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0), // Circular corners
-                  ),
-                ),
-                child: Text(
-                  _currentIndex == categoryScreens.length - 1 ? 'Checkout' : 'Next',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-
-      ],
-        ),
-      ),
-    ),
-);
+    );
   }
 }
+
 
 
 class ScrollableStepper extends StatefulWidget {
@@ -472,6 +485,5 @@ class StepperDot extends StatelessWidget {
     return '$firstLine\n$secondLine';
   }
 }
-
 
 

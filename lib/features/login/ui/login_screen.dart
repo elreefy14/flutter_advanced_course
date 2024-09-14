@@ -14,7 +14,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final controller = ScrollController();
   double offset = 0;
 
-  String? eventType="scientific event";
+  String? eventType="Événement social";
 
   @override
   void initState() {
@@ -139,8 +139,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       icon: SvgPicture.asset("assets/icons/dropdown.svg"),
                       value: eventType,
                       items: [
-                        'scientific event',
-                        'Social event',
+                        'Événement scientifique',
+                        'Événement social',
                       ].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -151,15 +151,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         setState(() {
                           eventType = value;
                         });
-
-
                       },
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 50),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Container(
@@ -167,7 +165,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 50.h,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF3383CD), Color(0xFF11249F)],
+                    colors: [
+                      Color(0xFFFF6300),
+                      Color(0xFFFF6300),
+                      Color(0xFFFFA500)
+                    ], // Matching the header's orange gradient
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
                   ),
@@ -176,26 +178,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextButton(
                   onPressed: () {
                     // Handle button press here
-                    // context.pushNamed(
-                    //   Routes.onBoardingScreen,
-                    //   arguments: eventType,
-                    // );
-                    if(eventType =='Social event')
-                      {
-                        context.pushNamed(
-                          Routes.onBoardingScreen,
-                          arguments: true,
-                        );                      }
-                    else{
+                    if (eventType == 'Événement social') {
+                      context.pushNamed(
+                        Routes.onBoardingScreen,
+                        arguments: true,
+                      );
+                    } else {
                       context.pushNamed(
                         Routes.onBoardingScreen,
                         arguments: false,
-                      );                    }
+                      );
+                    }
                   },
                   child: Text(
-                    "Next",
+                    "Suivant", // Text in French
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.white, // Keeping white for high contrast
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -203,6 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
+
           ],
         ),
       ),
@@ -333,10 +332,11 @@ class _MyHeaderState extends State<MyHeader> {
               child: Stack(
                 children: <Widget>[
                   Center(
-                    child: Text(
-                      "           Your journey \n"
-                          "to planning extraordinary\n "
-                          "    events begins here\n",
+                    child:  Text(
+                      "Votre voyage vers la planification"
+                          "d'événements extraordinaires\n"
+                          "commence ici",
+                      textAlign: TextAlign.center,
                       style: TextStyles.font16WhiteMedium.copyWith(
                         fontSize: 26,
                       ),
