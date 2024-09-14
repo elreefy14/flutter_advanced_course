@@ -11,6 +11,10 @@ import 'logic/cubit/service_providers_cubit.dart';
 import 'logic/cubit/service_providers_state.dart';
 
 class OnboardingScreen extends StatefulWidget {
+  final bool isSocialEvent;
+
+  const OnboardingScreen({super.key, required this.isSocialEvent});
+
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
@@ -92,7 +96,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+  create: (context) =>
+     ServiceProvidersCubit()
+    ..loadServiceProviders(isSocialEvent: widget.isSocialEvent),
+  child: Scaffold(
       body: SafeArea(
         child: Column(
           children: [
@@ -311,7 +319,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ],
         ),
       ),
-    );
+    ),
+);
   }
 }
 

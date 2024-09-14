@@ -20,12 +20,14 @@ class AppRouter {
     final arguments = settings.arguments;
 
     switch (settings.name) {
-      case Routes.onBoardingScreen ||Routes.loginScreen :
+      case Routes.onBoardingScreen  :
+        if (arguments is bool)
+          return MaterialPageRoute(
+          builder: (_) => OnboardingScreen(isSocialEvent: arguments,),
+        );
+        case Routes.loginScreen :
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => ServiceProvidersCubit()..loadServiceProviders(),
-            child: OnboardingScreen(),
-          ),
+          builder: (_) => LoginScreen(),
         );
 
       // case Routes.loginScreen:

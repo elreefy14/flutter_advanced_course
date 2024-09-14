@@ -1,0 +1,110 @@
+{
+  "conference_halls": {
+    "conference_halls": [
+      {
+        "name": "Salle de conférence Chréa",
+        "phone": "034124830",
+        "description": "Salle de conférence Chréa peut accueillir jusqu'à 100 personnes pour des besoins de séminaires, conférences, assemblées générales et autres.",
+        "price": "1.2",
+        "location": "Chréa",
+        "image": "https://example.com/images/salle_de_conference_chrea.jpg"
+      },
+      {
+        "name": "Salle de conférence hotel du lac",
+        "phone": "044 20 20 22",
+        "description": "Une large salle adaptable aux besoins d’organisation de vos réunions et évènements divers.",
+        "price": "1.4",
+        "location": "Hotel du lac",
+        "image": "https://example.com/images/salle_de_conference_hotel_du_lac.jpg"
+      }
+    ]
+  },
+  "services_technical_audio": {
+    "services_technical_audio": [
+      {
+        "name": "Absolut Sound & Light",
+        "phone": "0560 02 31 00",
+        "description": "Fournit des systèmes sonores, éclairages et équipements pour divers événements.",
+        "price": "1.2",
+        "image": "https://example.com/images/absolut_sound_light.jpg"
+      },
+      {
+        "name": "Artcomvideo",
+        "phone": "034215693",
+        "description": "Spécialisée dans la production audiovisuelle, ingénierie du son et éclairage.",
+        "price": "1.5",
+        "image": "https://example.com/images/artcomvideo.jpg"
+      }
+    ]
+  },
+  "catering_services": {
+    "catering_services": [
+      {
+        "name": "GICS",
+        "phone": "+213 661 285 357",
+        "description": "Global international catering service, fusion avec HAPPY MEAL.",
+        "price": "2.0",
+        "image": "https://example.com/images/gics.jpg"
+      },
+      {
+        "name": "Liliane saveurs",
+        "phone": "07 98 98 01 76",
+        "description": "Spécialisée dans la livraison de plateaux-repas et l’organisation d’événements.",
+        "price": "1.8",
+        "image": "https://example.com/images/liliane_saveurs.jpg"
+      }
+    ]
+  },
+  "logistic_support": {
+    "logistic_support": [
+      {
+        "name": "Yassir",
+        "phone": "034 81 04 66",
+        "description": "Service logistique et support.",
+        "price": "1.2",
+        "image": "https://example.com/images/yassir.jpg"
+      },
+      {
+        "name": "Heetch",
+        "phone": "021-50-58-98",
+        "description": "Support logistique.",
+        "price": "1.3",
+        "image": "https://example.com/images/heetch.jpg"
+      }
+    ]
+  },
+  "communication_services": {
+    "communication_services": [
+      {
+        "name": "Maghreb media",
+        "phone": "0562614173",
+        "description": "Entreprise de production audiovisuelle et création publicitaire.",
+        "price": "2.0",
+        "image": "https://example.com/images/maghreb_media.jpg"
+      },
+      {
+        "name": "Must communication Algérie",
+        "phone": "0770613580",
+        "description": "Agence de communication digitale et événementielle.",
+        "price": "1.9",
+        "image": "https://example.com/images/must_communication.jpg"
+      }
+    ]
+  },
+  "hotels": {
+    "hotels": [
+      {
+        "name": "Hotel du lac",
+        "phone": "044 20 20 22",
+        "price": "2.0",
+        "image": "https://example.com/images/hotel_du_lac.jpg"
+      },
+      {
+        "name": "Hotel cristal",
+        "phone": "034 81 85 85",
+        "price": "1.7",
+        "image": "https://example.com/images/hotel_cristal.jpg"
+      }
+    ]
+  }
+}

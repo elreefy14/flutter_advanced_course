@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/extensions.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
+import 'package:flutter_complete_project/features/onboarding/logic/cubit/service_providers_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/routing/routes.dart';
@@ -11,6 +13,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final controller = ScrollController();
   double offset = 0;
+
+  String? eventType="scientific event";
 
   @override
   void initState() {
@@ -133,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       isExpanded: true,
                       underline: SizedBox(),
                       icon: SvgPicture.asset("assets/icons/dropdown.svg"),
-                      value: "scientific event",
+                      value: eventType,
                       items: [
                         'scientific event',
                         'Social event',
@@ -143,45 +147,62 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(value),
                         );
                       }).toList(),
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        setState(() {
+                          eventType = value;
+                        });
+
+
+                      },
                     ),
                   ),
                 ],
               ),
             ),
             SizedBox(height: 20),
-            // Padding(
-            //   padding: EdgeInsets.symmetric(horizontal: 20.w),
-            //   child: Container(
-            //     width: double.infinity,
-            //     height: 50.h,
-            //     decoration: BoxDecoration(
-            //       gradient: LinearGradient(
-            //         colors: [Color(0xFF3383CD), Color(0xFF11249F)],
-            //         begin: Alignment.topRight,
-            //         end: Alignment.bottomLeft,
-            //       ),
-            //       borderRadius: BorderRadius.circular(25),
-            //     ),
-            //     child: TextButton(
-            //       onPressed: () {
-            //         // Handle button press here
-            //         context.pushNamed(
-            //           Routes.onBoardingScreen,
-            //           //
-            //         );
-            //       },
-            //       child: Text(
-            //         "Next",
-            //         style: TextStyle(
-            //           color: Colors.white,
-            //           fontSize: 16.sp,
-            //           fontWeight: FontWeight.bold,
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Container(
+                width: double.infinity,
+                height: 50.h,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF3383CD), Color(0xFF11249F)],
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                  ),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    // Handle button press here
+                    // context.pushNamed(
+                    //   Routes.onBoardingScreen,
+                    //   arguments: eventType,
+                    // );
+                    if(eventType =='Social event')
+                      {
+                        context.pushNamed(
+                          Routes.onBoardingScreen,
+                          arguments: true,
+                        );                      }
+                    else{
+                      context.pushNamed(
+                        Routes.onBoardingScreen,
+                        arguments: false,
+                      );                    }
+                  },
+                  child: Text(
+                    "Next",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
